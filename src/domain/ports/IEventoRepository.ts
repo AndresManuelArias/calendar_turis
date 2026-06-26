@@ -31,6 +31,11 @@ export interface IEventoRepository {
   obtenerPorId(id: string): Promise<Evento | null>;
   obtenerDetallePorId(id: string): Promise<EventoDetalle | null>;
   guardar(evento: Evento): Promise<void>;
+  guardarActividades(eventoId: string, actividades: Omit<Actividad, 'id'>[]): Promise<void>;
+  guardarMedia(eventoId: string, mediaList: Omit<Media, 'id'>[]): Promise<void>;
+  guardarParticipantes(eventoId: string, participantes: Omit<Participante, 'id'>[]): Promise<void>;
+  guardarPatrocinadores(eventoId: string, patrocinadores: Omit<Patrocinador, 'id'>[]): Promise<void>;
+  guardarIntereses(eventoId: string, interesesIds: string[]): Promise<void>;
   obtenerCiudades(): Promise<Ciudad[]>;
   obtenerIntereses(): Promise<Interes[]>;
 }

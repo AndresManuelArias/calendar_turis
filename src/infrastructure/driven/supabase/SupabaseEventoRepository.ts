@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto"
 import { SupabaseClient } from "@supabase/supabase-js"
 import { IEventoRepository, FiltrosEvento, EventoDetalle } from "../../../domain/ports/IEventoRepository"
 import { Evento } from "../../../domain/entities/Evento"
@@ -85,9 +86,10 @@ function mapearParticipante(row: Record<string, unknown>): Participante {
 function mapearPatrocinador(row: Record<string, unknown>): Patrocinador {
   return new Patrocinador(
     row.id as string,
-    row.nombre_empresa as string,
-    (row.url_logo as string) ?? "",
-    row.nivel_patrocinio as string,
+    row.nombre as string,
+    (row.descripcion as string) ?? "",
+    (row.logo_url as string) ?? "",
+    (row.sitio_web as string) ?? "",
     row.evento_id as string
   )
 }
@@ -305,6 +307,88 @@ export class SupabaseEventoRepository implements IEventoRepository {
 
     if (error) {
       throw new Error(`Error al guardar evento: ${error.message}`)
+    }
+  }
+
+  async guardarActividades(eventoId: string, actividades: Omit<Actividad, 'id'>[]): Promise<void> {
+    if (actividades.length === 0) return
+
+    const payloads = actividades.map((a) => ({
+      id: randomUUID(),
+      nombre: a.nombre,
+      descripcion: a.descripcion || null,
+      hora_inicio: a.horaInicio,
+      hora_fin: a.horaFin,
+      evento_id: eventoId,
+    }))
+
+    const { error } = await this.supabase.from("actividades").insert(payloads)
+    if (error) {
+      throw new Error(`Error al guardar actividades: ${error.message}`)
+    }
+  }
+
+  async guardarMedia(eventoId: string, mediaList: Omit<Media, 'id'>[]): Promise<void> {
+    if (mediaList.length === 0) return
+
+    const payloads = mediaList.map((m) => ({
+      id: randomUUID(),
+      url_archivo: m.urlArchivo,
+      tipo: m.tipo,
+      evento_id: eventoId,
+    }))
+
+    const { error } = await this.supabase.from("media").insert(payloads)
+    if (error) {
+      throw new Error(`Error al guardar media: ${error.message}`)
+    }
+  }
+
+  async guardarParticipantes(eventoId: string, participantes: Omit<Participante, 'id'>[]): Promise<void> {
+    if (participantes.length === 0) return
+
+    const payloads = participantes.map((p) => ({
+      id: randomUUID(),
+      nombre: p.nombre,
+      rol_o_perfil: p.rolOPerfil,
+      evento_id: eventoId,
+    }))
+
+    const { error } = await this.supabase.from("participantes").insert(payloads)
+    if (error) {
+      throw new Error(`Error al guardar participantes: ${error.message}`)
+    }
+  }
+
+  async guardarPatrocinadores(eventoId: string, patrocinadores: Omit<Patrocinador, 'id'>[]): Promise<void> {
+    if (patrocinadores.length === 0) return
+
+    const payloads = patrocinadores.map((p) => ({
+      id: randomUUID(),
+      nombre: p.nombre,
+      descripcion: p.descripcion || null,
+      logo_url: p.logoUrl || null,
+      sitio_web: p.sitioWeb || null,
+      evento_id: eventoId,
+    }))
+
+    const { error } = await this.supabase.from("patrocinadores").insert(payloads)
+    if (error) {
+      throw new Error(`Error al guardar patrocinadores: ${error.message}`)
+    }
+  }
+
+  async guardarIntereses(eventoId: string, interesesIds: string[]): Promise<void> {
+    if (interesesIds.length === 0) return
+
+    const payloads = interesesIds.map((interesId) => ({
+      evento_id: eventoId,
+      interes_id: interesId,
+    }))
+
+    const { error } = await this.supabase.from("evento_interes").insert(payloads)
+    if (error) {
+      throw new Error(`Error al guardar intereses del evento: ${error.message}`)
     }
   }
 

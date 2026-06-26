@@ -2,22 +2,10 @@
 
 import { Building2 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import type { PatrocinadorDto } from "@/application/dto/EventoResponse"
 
 interface PatrocinadorListProps {
   patrocinadores: PatrocinadorDto[]
-}
-
-function nivelColor(nivel: string): "default" | "secondary" | "outline" {
-  switch (nivel) {
-    case "Oro":
-      return "default"
-    case "Plata":
-      return "secondary"
-    default:
-      return "outline"
-  }
 }
 
 export function PatrocinadorList({ patrocinadores }: PatrocinadorListProps) {
@@ -35,11 +23,11 @@ export function PatrocinadorList({ patrocinadores }: PatrocinadorListProps) {
         <ul className="space-y-4">
           {patrocinadores.map((patrocinador) => (
             <li key={patrocinador.id} className="flex items-center gap-3">
-              {patrocinador.urlLogo ? (
+              {patrocinador.logoUrl ? (
                 <div className="size-10 shrink-0 overflow-hidden rounded-lg bg-muted">
                   <img
-                    src={patrocinador.urlLogo}
-                    alt={patrocinador.nombreEmpresa}
+                    src={patrocinador.logoUrl}
+                    alt={patrocinador.nombre}
                     className="size-full object-contain p-1"
                   />
                 </div>
@@ -49,11 +37,11 @@ export function PatrocinadorList({ patrocinadores }: PatrocinadorListProps) {
                 </div>
               )}
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium">{patrocinador.nombreEmpresa}</p>
+                <p className="text-sm font-medium">{patrocinador.nombre}</p>
+                {patrocinador.descripcion && (
+                  <p className="text-xs text-muted-foreground">{patrocinador.descripcion}</p>
+                )}
               </div>
-              <Badge variant={nivelColor(patrocinador.nivelPatrocinio)}>
-                {patrocinador.nivelPatrocinio}
-              </Badge>
             </li>
           ))}
         </ul>

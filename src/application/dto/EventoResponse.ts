@@ -22,9 +22,10 @@ export const ParticipanteSchema = z.object({
 
 export const PatrocinadorSchema = z.object({
   id: z.string(),
-  nombreEmpresa: z.string(),
-  urlLogo: z.string().nullable(),
-  nivelPatrocinio: z.string(),
+  nombre: z.string(),
+  descripcion: z.string().nullable(),
+  logoUrl: z.string().nullable(),
+  sitioWeb: z.string().nullable(),
 })
 
 export const InteresSchema = z.object({

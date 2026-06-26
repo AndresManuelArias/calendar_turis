@@ -1,5 +1,29 @@
 import { z } from "zod"
 
+const ActividadInputSchema = z.object({
+  nombre: z.string().min(1, "Nombre de actividad requerido"),
+  descripcion: z.string().optional(),
+  horaInicio: z.string().regex(/^\d{2}:\d{2}$/, "Hora inicio debe tener formato HH:mm"),
+  horaFin: z.string().regex(/^\d{2}:\d{2}$/, "Hora fin debe tener formato HH:mm"),
+})
+
+const MediaInputSchema = z.object({
+  urlArchivo: z.string().min(1, "URL de archivo requerida"),
+  tipo: z.enum(["IMAGEN", "VIDEO_EMBEDDED"]),
+})
+
+const ParticipanteInputSchema = z.object({
+  nombre: z.string().min(1, "Nombre de participante requerido"),
+  rolOPerfil: z.string().min(1, "Rol o perfil requerido"),
+})
+
+const PatrocinadorInputSchema = z.object({
+  nombre: z.string().min(1, "Nombre del patrocinador requerido"),
+  descripcion: z.string().optional(),
+  logoUrl: z.string().url("Logo URL debe ser válida").optional().or(z.literal("")),
+  sitioWeb: z.string().url("Sitio web debe ser válida").optional().or(z.literal("")),
+})
+
 export const CrearEventoSchema = z.object({
   titulo: z.string().min(3, "Título debe tener al menos 3 caracteres"),
   objetivo: z.string().min(1, "Objetivo requerido"),
@@ -14,6 +38,16 @@ export const CrearEventoSchema = z.object({
   observaciones: z.string().nullable().optional(),
   ciudadId: z.string().min(1, "Ciudad requerida"),
   organizadorId: z.string().min(1, "Organizador requerido"),
+  actividades: z.array(ActividadInputSchema).optional(),
+  media: z.array(MediaInputSchema).optional(),
+  participantes: z.array(ParticipanteInputSchema).optional(),
+  patrocinadores: z.array(PatrocinadorInputSchema).optional(),
+  interesesIds: z.array(z.string()).optional(),
 })
 
 export type CrearEventoRequest = z.infer<typeof CrearEventoSchema>
+
+export type ActividadInput = z.infer<typeof ActividadInputSchema>
+export type MediaInput = z.infer<typeof MediaInputSchema>
+export type ParticipanteInput = z.infer<typeof ParticipanteInputSchema>
+export type PatrocinadorInput = z.infer<typeof PatrocinadorInputSchema>

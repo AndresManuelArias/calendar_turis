@@ -55,9 +55,10 @@ export class GetEventoPorId implements IGetEventoPorId {
         })),
         patrocinadores: patrocinadores.map((p) => ({
           id: p.id,
-          nombreEmpresa: p.nombreEmpresa,
-          urlLogo: p.urlLogo || null,
-          nivelPatrocinio: p.nivelPatrocinio,
+          nombre: p.nombre,
+          descripcion: p.descripcion || null,
+          logoUrl: p.logoUrl || null,
+          sitioWeb: p.sitioWeb || null,
         })),
         intereses: intereses.map((i) => ({
           id: i.id,
