@@ -1,0 +1,32 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "username": "agenda-lugar-dev",
+  "agent": {
+    "domain": {
+      "description": "Crea entidades del dominio y puertos de repositorio (Arquitectura Hexagonal)",
+      "mode": "subagent"
+    },
+    "application": {
+      "description": "Crea casos de uso, DTOs y puertos de entrada con validación Zod",
+      "mode": "subagent"
+    },
+    "infrastructure": {
+      "description": "Crea repositorios Supabase, DI container y configuración del proyecto",
+      "mode": "subagent"
+    },
+    "ui": {
+      "description": "Crea componentes React y páginas con Tailwind CSS + shadcn/ui",
+      "mode": "subagent"
+    },
+    "feature": {
+      "description": "Orquestador: implementa Historias de Usuario completas (HU01-HU06) en todas las capas",
+      "mode": "subagent"
+    }
+  },
+  "references": {
+    "doc": {
+      "path": "doc",
+      "description": "Documentación del proyecto: historias de usuario, diagramas, casos de uso"
+    }
+  }
+}
