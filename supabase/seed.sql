@@ -9,7 +9,8 @@ INSERT INTO ciudades (id, nombre, codigo_region) VALUES
   ('a1b2c3d4-0000-0000-0000-000000000003', 'Cali', 'VAC'),
   ('a1b2c3d4-0000-0000-0000-000000000004', 'Barranquilla', 'ATL'),
   ('a1b2c3d4-0000-0000-0000-000000000005', 'Cartagena', 'BOL'),
-  ('a1b2c3d4-0000-0000-0000-000000000006', 'Rionegro', 'ANT')
+  ('a1b2c3d4-0000-0000-0000-000000000006', 'Rionegro', 'ANT'),
+  ('a1b2c3d4-0000-0000-0000-000000000007', 'Salta', 'SAL')
 ON CONFLICT (id) DO NOTHING;
 
 -- ============================================================
@@ -211,6 +212,102 @@ INSERT INTO patrocinadores (id, nombre_empresa, url_logo, nivel_patrocinio, even
   ('a3b2c3d4-0000-0000-0000-000000000005', 'Alcaldía de Rionegro', 'https://logo.clearbit.com/rionegro.gov.co', 'Plata', 'd1b2c3d4-0000-0000-0000-000000000007')
 ON CONFLICT (id) DO NOTHING;
 
+-- Evento 11: Hoy - Salta - Música (gratuito, folclore, con detalle completo)
+INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinerario, fecha_inicio, fecha_fin, lugar_direccion, costo_entrada, es_gratuito, url_ticketera_externa, observaciones, ciudad_id, organizador_id) VALUES
+  ('d1b2c3d4-0000-0000-0000-000000000011',
+   'Festival de Folclore Salta',
+   'Celebrar y preservar las tradiciones musicales del norte argentino',
+   'Público general, turistas nacionales e internacionales',
+   '10:00 Feria de artesanías\n11:00 Taller de danzas folclóricas\n14:00 Almuerzo típico (empanadas y locro)\n16:00 Actuación de ballets folclóricos\n18:00 Artista principal: Los Cantores del Valle\n20:00 Peña folclórica con baile popular\n23:00 Cierre con fuegos artificiales',
+   CURRENT_DATE + TIME '10:00:00',
+   CURRENT_DATE + TIME '23:00:00',
+   'Plaza 9 de Julio, Salta Capital',
+   0, true, NULL,
+   'Evento gratuito. Llevar reposera. Habrá puestos de comida y bebida.',
+   'a1b2c3d4-0000-0000-0000-000000000007',
+   'c1b2c3d4-0000-0000-0000-000000000001')
+ON CONFLICT (id) DO NOTHING;
+
+-- Evento 12: Hoy - Salta - Gastronomía (pago, cata de vinos)
+INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinerario, fecha_inicio, fecha_fin, lugar_direccion, costo_entrada, es_gratuito, url_ticketera_externa, observaciones, ciudad_id, organizador_id) VALUES
+  ('d1b2c3d4-0000-0000-0000-000000000012',
+   'Experiencia Vinos de Altura Salta',
+   'Degustar los mejores vinos de los valles salteños con maridaje regional',
+   'Turistas enófilos, parejas y grupos de amigos',
+   '15:00 Recepción con espumante\n15:30 Recorrido guiado por bodega\n17:00 Cata de 5 vinos de altura\n18:30 Maridaje con quesos y embutidos regionales\n20:00 Cena de tres pasos con vino incluido\n22:00 Cierre',
+   CURRENT_DATE + TIME '15:00:00',
+   CURRENT_DATE + TIME '22:00:00',
+   'Bodega Colomé, Ruta 53 km 20, Valles Calchaquíes',
+   95000, false, 'https://ticketera.com/vinos-altura-salta',
+   'Incluye copa de cristal de regalo. No incluye transporte desde Salta capital.',
+   'a1b2c3d4-0000-0000-0000-000000000007',
+   'c1b2c3d4-0000-0000-0000-000000000001')
+ON CONFLICT (id) DO NOTHING;
+
+-- Evento 13: En 5 días - Salta - Deportes (aventura)
+INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinerario, fecha_inicio, fecha_fin, lugar_direccion, costo_entrada, es_gratuito, url_ticketera_externa, observaciones, ciudad_id, organizador_id) VALUES
+  ('d1b2c3d4-0000-0000-0000-000000000013',
+   'Rafting Extremo en el Río Juramento',
+   'Vivir una experiencia de adrenalina en los rápidos del norte argentino',
+   'Jóvenes y adultos aventureros, grupos de amigos',
+   '08:00 Encuentro en base\n08:30 Charla de seguridad y entrega de equipos\n09:00 Inicio de descenso (nivel III-IV)\n11:00 Parada en playa para refrigerio\n11:30 Continuación del descenso\n13:00 Llegada y almuerzo\n14:30 Fotos y devolución de equipos\n15:00 Fin de la actividad',
+   CURRENT_DATE + INTERVAL '5 days' + TIME '08:00:00',
+   CURRENT_DATE + INTERVAL '5 days' + TIME '15:00:00',
+   'Río Juramento, Km 45 Ruta Nacional 9, Cafayate',
+   120000, false, 'https://ticketera.com/rafting-salta',
+   'Incluye equipo completo (chaleco, casco, remo), guía certificado y refrigerio. Edad mínima: 14 años.',
+   'a1b2c3d4-0000-0000-0000-000000000007',
+   'c1b2c3d4-0000-0000-0000-000000000001')
+ON CONFLICT (id) DO NOTHING;
+
+-- Evento 14: En 20 días - Salta - Arte (cultural)
+INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinerario, fecha_inicio, fecha_fin, lugar_direccion, costo_entrada, es_gratuito, url_ticketera_externa, observaciones, ciudad_id, organizador_id) VALUES
+  ('d1b2c3d4-0000-0000-0000-000000000014',
+   'Muestra de Arte Sacro Salteño',
+   'Exponer el patrimonio artístico religioso de las iglesias y conventos de Salta',
+   'Amantes del arte, la historia y la arquitectura religiosa',
+   '09:00 Apertura de la muestra\n10:00 Visita guiada: Escultura virreinal\n12:00 Pausa para almuerzo\n14:00 Conferencia: El barroco salteño\n16:00 Recorrido por iglesias históricas del centro\n18:00 Cierre con concierto de música barroca',
+   CURRENT_DATE + INTERVAL '20 days' + TIME '09:00:00',
+   CURRENT_DATE + INTERVAL '20 days' + TIME '19:00:00',
+   'Museo Histórico del Norte, Casco Histórico de Salta',
+   15000, false, 'https://ticketera.com/arte-sacro-salta',
+   'Entrada incluye guía y materiales informativos. Fotografía permitida sin flash.',
+   'a1b2c3d4-0000-0000-0000-000000000007',
+   'c1b2c3d4-0000-0000-0000-000000000001')
+ON CONFLICT (id) DO NOTHING;
+
+-- Actividades del Festival de Folclore Salta
+INSERT INTO actividades (id, nombre, descripcion, hora_inicio, hora_fin, evento_id) VALUES
+  ('e1b2c3d4-0000-0000-0000-000000000011', 'Feria de artesanías', 'Exposición y venta de artesanías regionales', '10:00', '20:00', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('e1b2c3d4-0000-0000-0000-000000000012', 'Taller de danzas folclóricas', 'Clase abierta de chacarera y zamba', '11:00', '12:30', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('e1b2c3d4-0000-0000-0000-000000000013', 'Actuación de ballets folclóricos', 'Presentación de ballets de toda la provincia', '16:00', '17:30', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('e1b2c3d4-0000-0000-0000-000000000014', 'Los Cantores del Valle', 'Actuación estelar del reconocido grupo folclórico', '18:00', '20:00', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('e1b2c3d4-0000-0000-0000-000000000015', 'Peña folclórica', 'Baile popular abierto al público con música en vivo', '20:00', '23:00', 'd1b2c3d4-0000-0000-0000-000000000011')
+ON CONFLICT (id) DO NOTHING;
+
+-- Media del Festival de Folclore Salta
+INSERT INTO media (id, url_archivo, tipo, evento_id) VALUES
+  ('f1b2c3d4-0000-0000-0000-000000000008', 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=800', 'IMAGEN', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('f1b2c3d4-0000-0000-0000-000000000009', 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=800', 'IMAGEN', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('f1b2c3d4-0000-0000-0000-000000000010', 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800', 'IMAGEN', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('f1b2c3d4-0000-0000-0000-000000000011', 'https://www.youtube.com/embed/6BUb6o8A_tA', 'VIDEO_EMBEDDED', 'd1b2c3d4-0000-0000-0000-000000000011')
+ON CONFLICT (id) DO NOTHING;
+
+-- Participantes del Festival de Folclore Salta
+INSERT INTO participantes (id, nombre, rol_o_perfil, evento_id) VALUES
+  ('a2b2c3d4-0000-0000-0000-000000000008', 'Martina Torres', 'Coordinadora General del Festival', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('a2b2c3d4-0000-0000-0000-000000000009', 'Hermanos Díaz', 'Ballet Folclórico Oficial', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('a2b2c3d4-0000-0000-0000-000000000010', 'Los Cantores del Valle', 'Grupo Musical Estelar', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('a2b2c3d4-0000-0000-0000-000000000011', 'Prof. Juan Mendoza', 'Tallerista de Danzas', 'd1b2c3d4-0000-0000-0000-000000000011')
+ON CONFLICT (id) DO NOTHING;
+
+-- Patrocinadores del Festival de Folclore Salta
+INSERT INTO patrocinadores (id, nombre_empresa, url_logo, nivel_patrocinio, evento_id) VALUES
+  ('a3b2c3d4-0000-0000-0000-000000000006', 'Gobierno de Salta', 'https://logo.clearbit.com/salta.gob.ar', 'Oro', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('a3b2c3d4-0000-0000-0000-000000000007', 'Cerveza Salta', 'https://logo.clearbit.com/cervezasalta.com.ar', 'Plata', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('a3b2c3d4-0000-0000-0000-000000000008', 'Hotel Sheraton Salta', 'https://logo.clearbit.com/sheraton.com.ar', 'Bronce', 'd1b2c3d4-0000-0000-0000-000000000011')
+ON CONFLICT (id) DO NOTHING;
+
 -- Evento 6: Hoy - Bogotá - Tecnología (para tener múltiples eventos en una ciudad)
 INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinerario, fecha_inicio, fecha_fin, lugar_direccion, costo_entrada, es_gratuito, url_ticketera_externa, observaciones, ciudad_id, organizador_id) VALUES
   ('d1b2c3d4-0000-0000-0000-000000000006',
@@ -241,7 +338,11 @@ INSERT INTO evento_interes (evento_id, interes_id) VALUES
   ('d1b2c3d4-0000-0000-0000-000000000007', 'b1b2c3d4-0000-0000-0000-000000000001'), -- Rionegro Music → Música
   ('d1b2c3d4-0000-0000-0000-000000000008', 'b1b2c3d4-0000-0000-0000-000000000004'), -- Mercado Campesino → Gastronomía
   ('d1b2c3d4-0000-0000-0000-000000000009', 'b1b2c3d4-0000-0000-0000-000000000005'), -- Travesía Ecológica → Deportes
-  ('d1b2c3d4-0000-0000-0000-000000000010', 'b1b2c3d4-0000-0000-0000-000000000002')  -- Congreso Tecnología → Tecnología
+  ('d1b2c3d4-0000-0000-0000-000000000010', 'b1b2c3d4-0000-0000-0000-000000000002'), -- Congreso Tecnología → Tecnología
+  ('d1b2c3d4-0000-0000-0000-000000000011', 'b1b2c3d4-0000-0000-0000-000000000001'), -- Folclore Salta → Música
+  ('d1b2c3d4-0000-0000-0000-000000000012', 'b1b2c3d4-0000-0000-0000-000000000004'), -- Vinos Altura → Gastronomía
+  ('d1b2c3d4-0000-0000-0000-000000000013', 'b1b2c3d4-0000-0000-0000-000000000005'), -- Rafting → Deportes
+  ('d1b2c3d4-0000-0000-0000-000000000014', 'b1b2c3d4-0000-0000-0000-000000000003')  -- Arte Sacro → Arte
 ON CONFLICT DO NOTHING;
 
 -- ============================================================
