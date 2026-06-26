@@ -41,8 +41,8 @@ export class GetEventoPorId implements IGetEventoPorId {
           id: a.id,
           nombre: a.nombre,
           descripcion: a.descripcion,
-          horaInicio: a.horaInicio.toISOString(),
-          horaFin: a.horaFin.toISOString(),
+          horaInicio: `${String(a.horaInicio.getHours()).padStart(2, "0")}:${String(a.horaInicio.getMinutes()).padStart(2, "0")}`,
+          horaFin: `${String(a.horaFin.getHours()).padStart(2, "0")}:${String(a.horaFin.getMinutes()).padStart(2, "0")}`,
         })),
         media: media.map((m) => ({
           id: m.id,
