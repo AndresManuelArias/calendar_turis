@@ -16,10 +16,12 @@ import { IGetEventoPorId } from "../../application/ports/IGetEventoPorId"
 import { ICrearEvento } from "../../application/ports/ICrearEvento"
 import { IRegistrarOrganizador } from "../../application/ports/IRegistrarOrganizador"
 import { IIniciarSesion } from "../../application/ports/IIniciarSesion"
+import { IActualizarEvento } from "../../application/ports/IActualizarEvento"
 import { GetEventosDelDia } from "../../application/usecases/GetEventosDelDia"
 import { FiltrarEventos } from "../../application/usecases/FiltrarEventos"
 import { GetEventoPorId } from "../../application/usecases/GetEventoPorId"
 import { CrearEvento } from "../../application/usecases/CrearEvento"
+import { ActualizarEvento } from "../../application/usecases/ActualizarEvento"
 import { RegistrarOrganizador } from "../../application/usecases/RegistrarOrganizador"
 import { IniciarSesion } from "../../application/usecases/IniciarSesion"
 
@@ -149,4 +151,8 @@ container.transient<IRegistrarOrganizador>("IRegistrarOrganizador", (c) => {
 
 container.transient<IIniciarSesion>("IIniciarSesion", (c) => {
   return new IniciarSesion(c.resolve<IUsuarioRepository>("IUsuarioRepository"))
+})
+
+container.transient<IActualizarEvento>("IActualizarEvento", (c) => {
+  return new ActualizarEvento(c.resolve<IEventoRepository>("IEventoRepository"))
 })

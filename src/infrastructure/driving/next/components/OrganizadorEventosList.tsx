@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 interface EventoItem {
   id: string
@@ -68,28 +69,33 @@ export function OrganizadorEventosList() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {eventos.map((e) => (
-        <Link
-          key={e.id}
-          href={`/eventos/${e.id}`}
-          className="rounded-xl border p-4 transition-colors hover:bg-muted/50"
-        >
-          <h3 className="font-semibold">{e.titulo}</h3>
-          <p className="mt-1 text-sm text-muted-foreground">{e.lugarDireccion}</p>
-          <p className="text-sm text-muted-foreground">
-            {new Date(e.fechaInicio).toLocaleDateString("es-CO", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}
-          </p>
-          <p className="mt-2 text-xs">
-            {e.esGratuito ? (
-              <span className="text-green-600">Gratuito</span>
-            ) : (
-              <span>$ {e.costoEntrada.toLocaleString("es-CO")}</span>
-            )}
-          </p>
-        </Link>
+        <div key={e.id} className="rounded-xl border p-4 transition-colors hover:bg-muted/50">
+          <Link href={`/eventos/${e.id}`}>
+            <h3 className="font-semibold">{e.titulo}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">{e.lugarDireccion}</p>
+            <p className="text-sm text-muted-foreground">
+              {new Date(e.fechaInicio).toLocaleDateString("es-CO", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
+            </p>
+            <p className="mt-2 text-xs">
+              {e.esGratuito ? (
+                <span className="text-green-600">Gratuito</span>
+              ) : (
+                <span>$ {e.costoEntrada.toLocaleString("es-CO")}</span>
+              )}
+            </p>
+          </Link>
+          <div className="mt-3 flex justify-end">
+            <Link href={`/organizador/eventos/${e.id}/editar`}>
+              <Button type="button" variant="outline" size="sm">
+                Editar
+              </Button>
+            </Link>
+          </div>
+        </div>
       ))}
     </div>
   )

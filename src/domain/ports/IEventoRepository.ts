@@ -39,4 +39,11 @@ export interface IEventoRepository {
   obtenerPorOrganizadorId(organizadorId: string): Promise<Evento[]>;
   obtenerCiudades(): Promise<Ciudad[]>;
   obtenerIntereses(): Promise<Interes[]>;
+
+  actualizar(evento: Evento): Promise<void>;
+  eliminarActividades(eventoId: string): Promise<void>;
+  eliminarMedia(eventoId: string): Promise<void>;
+  eliminarParticipantes(eventoId: string): Promise<void>;
+  eliminarPatrocinadores(eventoId: string): Promise<void>;
+  eliminarIntereses(eventoId: string): Promise<void>;
 }

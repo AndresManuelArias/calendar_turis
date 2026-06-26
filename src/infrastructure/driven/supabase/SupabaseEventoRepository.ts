@@ -436,6 +436,87 @@ export class SupabaseEventoRepository implements IEventoRepository {
     return (data ?? []).map(mapearInteres)
   }
 
+  async actualizar(evento: Evento): Promise<void> {
+    const payload = {
+      titulo: evento.titulo,
+      objetivo: evento.objetivo,
+      publico_objetivo: evento.publicoObjetivo,
+      descripcion_itinerario: evento.descripcionItinerario,
+      fecha_inicio: evento.fechaInicio.toISOString(),
+      fecha_fin: evento.fechaFin.toISOString(),
+      lugar_direccion: evento.lugarDireccion,
+      costo_entrada: evento.costoEntrada,
+      es_gratuito: evento.esGratuito,
+      url_ticketera_externa: evento.urlTicketeraExterna || null,
+      observaciones: evento.observaciones || null,
+      ciudad_id: evento.ciudadId,
+    }
+
+    const { error } = await this.supabase
+      .from("eventos")
+      .update(payload)
+      .eq("id", evento.id)
+
+    if (error) {
+      throw new Error(`Error al actualizar evento: ${error.message}`)
+    }
+  }
+
+  async eliminarActividades(eventoId: string): Promise<void> {
+    const { error } = await this.supabase
+      .from("actividades")
+      .delete()
+      .eq("evento_id", eventoId)
+
+    if (error) {
+      throw new Error(`Error al eliminar actividades: ${error.message}`)
+    }
+  }
+
+  async eliminarMedia(eventoId: string): Promise<void> {
+    const { error } = await this.supabase
+      .from("media")
+      .delete()
+      .eq("evento_id", eventoId)
+
+    if (error) {
+      throw new Error(`Error al eliminar media: ${error.message}`)
+    }
+  }
+
+  async eliminarParticipantes(eventoId: string): Promise<void> {
+    const { error } = await this.supabase
+      .from("participantes")
+      .delete()
+      .eq("evento_id", eventoId)
+
+    if (error) {
+      throw new Error(`Error al eliminar participantes: ${error.message}`)
+    }
+  }
+
+  async eliminarPatrocinadores(eventoId: string): Promise<void> {
+    const { error } = await this.supabase
+      .from("patrocinadores")
+      .delete()
+      .eq("evento_id", eventoId)
+
+    if (error) {
+      throw new Error(`Error al eliminar patrocinadores: ${error.message}`)
+    }
+  }
+
+  async eliminarIntereses(eventoId: string): Promise<void> {
+    const { error } = await this.supabase
+      .from("evento_interes")
+      .delete()
+      .eq("evento_id", eventoId)
+
+    if (error) {
+      throw new Error(`Error al eliminar intereses del evento: ${error.message}`)
+    }
+  }
+
   private _inicioDelDia(): string {
     const ahora = new Date()
     return new Date(
