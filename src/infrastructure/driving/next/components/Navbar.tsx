@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 
 interface SesionData {
@@ -14,6 +14,7 @@ interface SesionData {
 
 export function Navbar() {
   const router = useRouter()
+  const pathname = usePathname()
   const [sesion, setSesion] = useState<SesionData | null>(null)
 
   useEffect(() => {
@@ -21,11 +22,13 @@ export function Navbar() {
     if (raw) {
       try {
         setSesion(JSON.parse(raw))
+        return
       } catch {
-        setSesion(null)
+        // ignore
       }
     }
-  }, [])
+    setSesion(null)
+  }, [pathname])
 
   function handleCerrarSesion() {
     localStorage.removeItem("agenda-lugar-sesion")
