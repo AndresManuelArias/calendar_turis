@@ -31,7 +31,7 @@ function mapearCiudad(row: Record<string, unknown>): Ciudad {
   return new Ciudad(
     row.id as string,
     row.nombre as string,
-    row.codigo_region as string,
+    row.estado as string,
     (row.pais as string) ?? "Colombia"
   )
 }
@@ -266,7 +266,7 @@ export class SupabaseEventoRepository implements IEventoRepository {
     const ciudad = new Ciudad(
       ciudadRow.id as string,
       ciudadRow.nombre as string,
-      ciudadRow.codigo_region as string,
+      ciudadRow.estado as string,
       (ciudadRow.pais as string) ?? "Colombia"
     )
 

@@ -1,13 +1,13 @@
 export class Ciudad {
   private _id: string;
   private _nombre: string;
-  private _codigoRegion: string;
+  private _estado: string;
   private _pais: string;
 
-  constructor(id: string, nombre: string, codigoRegion: string, pais: string = "Colombia") {
+  constructor(id: string, nombre: string, estado: string, pais: string = "Colombia") {
     this._id = id;
     this._nombre = nombre;
-    this._codigoRegion = codigoRegion;
+    this._estado = estado;
     this._pais = pais;
   }
 
@@ -19,8 +19,8 @@ export class Ciudad {
     return this._nombre;
   }
 
-  get codigoRegion(): string {
-    return this._codigoRegion;
+  get estado(): string {
+    return this._estado;
   }
 
   get pais(): string {

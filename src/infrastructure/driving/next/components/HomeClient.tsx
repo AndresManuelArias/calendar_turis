@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { CitySelector } from "./CitySelector"
 import { EventoGrid } from "./EventoGrid"
 
@@ -9,6 +9,16 @@ const CITY_STORAGE_KEY = "agenda-lugar-ciudad"
 interface CiudadData {
   id: string
   nombre: string
+}
+
+interface EstadoData {
+  nombre: string
+  ciudades: CiudadData[]
+}
+
+interface PaisData {
+  nombre: string
+  estados: EstadoData[]
 }
 
 interface EventoData {
@@ -29,13 +39,18 @@ interface EventoData {
 }
 
 interface HomeClientProps {
-  ciudades: CiudadData[]
+  ubicaciones: PaisData[]
 }
 
-export function HomeClient({ ciudades }: HomeClientProps) {
+export function HomeClient({ ubicaciones }: HomeClientProps) {
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null)
   const [eventos, setEventos] = useState<EventoData[]>([])
   const [isLoading, setIsLoading] = useState(true)
+
+  const todasLasCiudades = useMemo(
+    () => ubicaciones.flatMap((p) => p.estados.flatMap((e) => e.ciudades)),
+    [ubicaciones]
+  )
 
   const fetchEventos = useCallback(async (ciudadId: string) => {
     setIsLoading(true)
@@ -56,13 +71,13 @@ export function HomeClient({ ciudades }: HomeClientProps) {
 
   useEffect(() => {
     const savedCityId = localStorage.getItem(CITY_STORAGE_KEY)
-    if (savedCityId && ciudades.some((c) => c.id === savedCityId)) {
+    if (savedCityId && todasLasCiudades.some((c) => c.id === savedCityId)) {
       setSelectedCityId(savedCityId)
       fetchEventos(savedCityId)
     } else {
       setIsLoading(false)
     }
-  }, [ciudades, fetchEventos])
+  }, [todasLasCiudades, fetchEventos])
 
   const handleCitySelect = (ciudadId: string) => {
     setSelectedCityId(ciudadId)
@@ -72,7 +87,7 @@ export function HomeClient({ ciudades }: HomeClientProps) {
   return (
     <>
       <CitySelector
-        ciudades={ciudades}
+        ubicaciones={ubicaciones}
         selectedCityId={selectedCityId}
         onSelect={handleCitySelect}
       />

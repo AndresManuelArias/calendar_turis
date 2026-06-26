@@ -3,14 +3,14 @@
 -- ============================================================
 -- Ciudades
 -- ============================================================
-INSERT INTO ciudades (id, nombre, codigo_region, pais) VALUES
-  ('a1b2c3d4-0000-0000-0000-000000000001', 'Bogotá', 'DC', 'Colombia'),
-  ('a1b2c3d4-0000-0000-0000-000000000002', 'Medellín', 'ANT', 'Colombia'),
-  ('a1b2c3d4-0000-0000-0000-000000000003', 'Cali', 'VAC', 'Colombia'),
-  ('a1b2c3d4-0000-0000-0000-000000000004', 'Barranquilla', 'ATL', 'Colombia'),
-  ('a1b2c3d4-0000-0000-0000-000000000005', 'Cartagena', 'BOL', 'Colombia'),
-  ('a1b2c3d4-0000-0000-0000-000000000006', 'Rionegro', 'ANT', 'Colombia'),
-  ('a1b2c3d4-0000-0000-0000-000000000007', 'Salta', 'SAL', 'Argentina')
+INSERT INTO ciudades (id, nombre, estado, pais) VALUES
+  ('a1b2c3d4-0000-0000-0000-000000000001', 'Bogotá', 'Bogotá D.C.', 'Colombia'),
+  ('a1b2c3d4-0000-0000-0000-000000000002', 'Medellín', 'Antioquia', 'Colombia'),
+  ('a1b2c3d4-0000-0000-0000-000000000003', 'Cali', 'Valle del Cauca', 'Colombia'),
+  ('a1b2c3d4-0000-0000-0000-000000000004', 'Barranquilla', 'Atlántico', 'Colombia'),
+  ('a1b2c3d4-0000-0000-0000-000000000005', 'Cartagena', 'Bolívar', 'Colombia'),
+  ('a1b2c3d4-0000-0000-0000-000000000006', 'Rionegro', 'Antioquia', 'Colombia'),
+  ('a1b2c3d4-0000-0000-0000-000000000007', 'Salta', 'Salta', 'Argentina')
 ON CONFLICT (id) DO NOTHING;
 
 -- ============================================================

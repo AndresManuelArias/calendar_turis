@@ -7,8 +7,8 @@
 CREATE TABLE ciudades (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   nombre TEXT NOT NULL,
-  codigo_region TEXT NOT NULL,
-  pais TEXT NOT NULL DEFAULT 'Colombia',
+  estado TEXT NOT NULL,
+  pais TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 

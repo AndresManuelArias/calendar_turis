@@ -5,14 +5,35 @@ import { HomeClient } from "@/infrastructure/driving/next/components/HomeClient"
 export const dynamic = "force-dynamic"
 
 export default async function Home() {
-  let ciudades: Array<{ id: string; nombre: string }> = []
+  let ubicaciones: Array<{
+    nombre: string
+    estados: Array<{
+      nombre: string
+      ciudades: Array<{ id: string; nombre: string }>
+    }>
+  }> = []
 
   try {
     const ciudadRepo = container.resolve<ICiudadRepository>("ICiudadRepository")
-    const ciudadesData = await ciudadRepo.obtenerTodas()
-    ciudades = ciudadesData.map((c) => ({ id: c.id, nombre: c.nombre }))
+    const ciudades = await ciudadRepo.obtenerTodas()
+
+    const paisesMap = new Map<string, Map<string, Array<{ id: string; nombre: string }>>>()
+    for (const c of ciudades) {
+      if (!paisesMap.has(c.pais)) paisesMap.set(c.pais, new Map())
+      const estadosMap = paisesMap.get(c.pais)!
+      if (!estadosMap.has(c.estado)) estadosMap.set(c.estado, [])
+      estadosMap.get(c.estado)!.push({ id: c.id, nombre: c.nombre })
+    }
+
+    ubicaciones = Array.from(paisesMap.entries()).map(([paisNombre, estadosMap]) => ({
+      nombre: paisNombre,
+      estados: Array.from(estadosMap.entries()).map(([estadoNombre, ciudades]) => ({
+        nombre: estadoNombre,
+        ciudades,
+      })),
+    }))
   } catch (error) {
-    console.error("Error al cargar ciudades:", error)
+    console.error("Error al cargar ubicaciones:", error)
   }
 
   return (
@@ -21,7 +42,7 @@ export default async function Home() {
       <p className="mb-8 text-muted-foreground">
         Descubre los mejores eventos en tu ciudad
       </p>
-      <HomeClient ciudades={ciudades} />
+      <HomeClient ubicaciones={ubicaciones} />
     </div>
   )
 }

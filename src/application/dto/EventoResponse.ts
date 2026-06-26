@@ -36,7 +36,7 @@ export const InteresSchema = z.object({
 export const CiudadInfoSchema = z.object({
   id: z.string(),
   nombre: z.string(),
-  codigoRegion: z.string(),
+  estado: z.string(),
   pais: z.string(),
 })
 

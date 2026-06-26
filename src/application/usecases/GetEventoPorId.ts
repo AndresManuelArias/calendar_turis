@@ -67,7 +67,7 @@ export class GetEventoPorId implements IGetEventoPorId {
         ciudad: {
           id: ciudad.id,
           nombre: ciudad.nombre,
-          codigoRegion: ciudad.codigoRegion,
+          estado: ciudad.estado,
           pais: ciudad.pais,
         },
       }

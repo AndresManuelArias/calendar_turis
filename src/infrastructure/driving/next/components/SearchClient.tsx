@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useMemo } from "react"
 import { CitySelector } from "./CitySelector"
 import { DateRangePicker } from "./DateRangePicker"
 import { InterestFilter } from "./InterestFilter"
@@ -11,6 +11,16 @@ const CITY_STORAGE_KEY = "agenda-lugar-ciudad"
 interface CiudadData {
   id: string
   nombre: string
+}
+
+interface EstadoData {
+  nombre: string
+  ciudades: CiudadData[]
+}
+
+interface PaisData {
+  nombre: string
+  estados: EstadoData[]
 }
 
 interface InteresData {
@@ -36,17 +46,22 @@ interface EventoData {
 }
 
 interface SearchClientProps {
-  ciudades: CiudadData[]
+  ubicaciones: PaisData[]
   intereses: InteresData[]
 }
 
-export function SearchClient({ ciudades, intereses }: SearchClientProps) {
+export function SearchClient({ ubicaciones, intereses }: SearchClientProps) {
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null)
   const [startDate, setStartDate] = useState<Date | null>(null)
   const [endDate, setEndDate] = useState<Date | null>(null)
   const [selectedIntereses, setSelectedIntereses] = useState<string[]>([])
   const [eventos, setEventos] = useState<EventoData[]>([])
   const [isLoading, setIsLoading] = useState(false)
+
+  const todasLasCiudades = useMemo(
+    () => ubicaciones.flatMap((p) => p.estados.flatMap((e) => e.ciudades)),
+    [ubicaciones]
+  )
 
   const fetchEventos = useCallback(async () => {
     if (!selectedCityId) {
@@ -84,10 +99,10 @@ export function SearchClient({ ciudades, intereses }: SearchClientProps) {
 
   useEffect(() => {
     const savedCityId = localStorage.getItem(CITY_STORAGE_KEY)
-    if (savedCityId && ciudades.some((c) => c.id === savedCityId)) {
+    if (savedCityId && todasLasCiudades.some((c) => c.id === savedCityId)) {
       setSelectedCityId(savedCityId)
     }
-  }, [ciudades])
+  }, [todasLasCiudades])
 
   useEffect(() => {
     fetchEventos()
@@ -113,7 +128,7 @@ export function SearchClient({ ciudades, intereses }: SearchClientProps) {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end gap-4">
         <CitySelector
-          ciudades={ciudades}
+          ubicaciones={ubicaciones}
           selectedCityId={selectedCityId}
           onSelect={handleCitySelect}
         />
