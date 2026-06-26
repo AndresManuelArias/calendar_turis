@@ -1,5 +1,14 @@
 {
 	"devDependencies": {
-		"plop": "^4.0.5"
-	}
+		"plop": "^4.0.5",
+		"tsx": "^4.22.4"
+	},
+
+	"scripts": {
+
+    "g":"tsx scripts/generate.ts",
+
+    "generate":"tsx scripts/generate.ts"
+
+  }
 }
