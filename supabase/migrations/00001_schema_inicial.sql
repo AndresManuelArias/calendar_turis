@@ -137,3 +137,23 @@ CREATE INDEX idx_patrocinadores_evento_id ON patrocinadores(evento_id);
 CREATE INDEX idx_alianzas_evento_id ON alianzas(evento_id);
 CREATE INDEX idx_evento_interes_evento_id ON evento_interes(evento_id);
 CREATE INDEX idx_evento_interes_interes_id ON evento_interes(interes_id);
+
+-- ============================================================
+-- Permisos para desarrollo (rol anon)
+-- ============================================================
+ALTER TABLE ciudades DISABLE ROW LEVEL SECURITY;
+ALTER TABLE usuarios DISABLE ROW LEVEL SECURITY;
+ALTER TABLE organizadores DISABLE ROW LEVEL SECURITY;
+ALTER TABLE intereses DISABLE ROW LEVEL SECURITY;
+ALTER TABLE eventos DISABLE ROW LEVEL SECURITY;
+ALTER TABLE actividades DISABLE ROW LEVEL SECURITY;
+ALTER TABLE media DISABLE ROW LEVEL SECURITY;
+ALTER TABLE participantes DISABLE ROW LEVEL SECURITY;
+ALTER TABLE patrocinadores DISABLE ROW LEVEL SECURITY;
+ALTER TABLE alianzas DISABLE ROW LEVEL SECURITY;
+ALTER TABLE evento_interes DISABLE ROW LEVEL SECURITY;
+
+GRANT USAGE ON SCHEMA public TO anon;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO anon;
+GRANT INSERT ON ALL TABLES IN SCHEMA public TO anon;
+GRANT UPDATE ON ALL TABLES IN SCHEMA public TO anon;
