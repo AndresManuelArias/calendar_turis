@@ -1,6 +1,10 @@
 import { SupabaseClient } from "@supabase/supabase-js"
-import { IEventoRepository, FiltrosEvento } from "../../../domain/ports/IEventoRepository"
+import { IEventoRepository, FiltrosEvento, EventoDetalle } from "../../../domain/ports/IEventoRepository"
 import { Evento } from "../../../domain/entities/Evento"
+import { Actividad } from "../../../domain/entities/Actividad"
+import { Media } from "../../../domain/entities/Media"
+import { Participante } from "../../../domain/entities/Participante"
+import { Patrocinador } from "../../../domain/entities/Patrocinador"
 import { Ciudad } from "../../../domain/entities/Ciudad"
 import { Interes } from "../../../domain/entities/Interes"
 
@@ -36,6 +40,54 @@ function mapearInteres(row: Record<string, unknown>): Interes {
     row.id as string,
     row.nombre as string,
     row.descripcion as string
+  )
+}
+
+function timeStringToDate(timeStr: string): Date {
+  const d = new Date()
+  const parts = timeStr.split(":")
+  if (parts.length >= 2) {
+    d.setHours(parseInt(parts[0], 10), parseInt(parts[1], 10), parts[2] ? parseInt(parts[2], 10) : 0, 0)
+  }
+  return d
+}
+
+function mapearActividad(row: Record<string, unknown>): Actividad {
+  return new Actividad(
+    row.id as string,
+    row.nombre as string,
+    (row.descripcion as string) ?? "",
+    timeStringToDate(row.hora_inicio as string),
+    timeStringToDate(row.hora_fin as string),
+    row.evento_id as string
+  )
+}
+
+function mapearMedia(row: Record<string, unknown>): Media {
+  return new Media(
+    row.id as string,
+    row.url_archivo as string,
+    row.tipo as string as any,
+    row.evento_id as string
+  )
+}
+
+function mapearParticipante(row: Record<string, unknown>): Participante {
+  return new Participante(
+    row.id as string,
+    row.nombre as string,
+    row.rol_o_perfil as string,
+    row.evento_id as string
+  )
+}
+
+function mapearPatrocinador(row: Record<string, unknown>): Patrocinador {
+  return new Patrocinador(
+    row.id as string,
+    row.nombre_empresa as string,
+    (row.url_logo as string) ?? "",
+    row.nivel_patrocinio as string,
+    row.evento_id as string
   )
 }
 
@@ -177,6 +229,54 @@ export class SupabaseEventoRepository implements IEventoRepository {
     }
 
     return data ? mapearEvento(data) : null
+  }
+
+  async obtenerDetallePorId(id: string): Promise<EventoDetalle | null> {
+    const { data, error } = await this.supabase
+      .from("eventos")
+      .select("*, ciudad:ciudades(*), actividades(*), media(*), participantes(*), patrocinadores(*), evento_interes(*)")
+      .eq("id", id)
+      .single()
+
+    if (error) {
+      if (error.code === "PGRST116") {
+        return null
+      }
+      throw new Error(`Error al obtener detalle del evento: ${error.message}`)
+    }
+
+    if (!data) return null
+
+    const row = data as Record<string, unknown>
+    const evento = mapearEvento(row)
+
+    const actividades = ((row.actividades as Record<string, unknown>[]) ?? []).map(mapearActividad)
+    const media = ((row.media as Record<string, unknown>[]) ?? []).map(mapearMedia)
+    const participantes = ((row.participantes as Record<string, unknown>[]) ?? []).map(mapearParticipante)
+    const patrocinadores = ((row.patrocinadores as Record<string, unknown>[]) ?? []).map(mapearPatrocinador)
+
+    const eventoIntereses = (row.evento_interes as Record<string, unknown>[]) ?? []
+    const interesesRows = eventoIntereses
+      .map((ei) => ei.interes as Record<string, unknown>)
+      .filter(Boolean)
+    const interesEntities = interesesRows.map(mapearInteres)
+
+    const ciudadRow = row.ciudad as Record<string, unknown>
+    const ciudad = new Ciudad(
+      ciudadRow.id as string,
+      ciudadRow.nombre as string,
+      ciudadRow.codigo_region as string
+    )
+
+    return {
+      evento,
+      actividades,
+      media,
+      participantes,
+      patrocinadores,
+      intereses: interesEntities,
+      ciudad,
+    }
   }
 
   async guardar(evento: Evento): Promise<void> {

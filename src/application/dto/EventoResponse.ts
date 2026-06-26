@@ -1,5 +1,44 @@
 import { z } from "zod"
 
+export const ActividadSchema = z.object({
+  id: z.string(),
+  nombre: z.string(),
+  descripcion: z.string(),
+  horaInicio: z.string(),
+  horaFin: z.string(),
+})
+
+export const MediaSchema = z.object({
+  id: z.string(),
+  urlArchivo: z.string(),
+  tipo: z.string(),
+})
+
+export const ParticipanteSchema = z.object({
+  id: z.string(),
+  nombre: z.string(),
+  rolOPerfil: z.string(),
+})
+
+export const PatrocinadorSchema = z.object({
+  id: z.string(),
+  nombreEmpresa: z.string(),
+  urlLogo: z.string().nullable(),
+  nivelPatrocinio: z.string(),
+})
+
+export const InteresSchema = z.object({
+  id: z.string(),
+  nombre: z.string(),
+  descripcion: z.string(),
+})
+
+export const CiudadInfoSchema = z.object({
+  id: z.string(),
+  nombre: z.string(),
+  codigoRegion: z.string(),
+})
+
 export const EventoSchema = z.object({
   id: z.string(),
   titulo: z.string(),
@@ -15,6 +54,18 @@ export const EventoSchema = z.object({
   observaciones: z.string().nullable(),
   ciudadId: z.string(),
   organizadorId: z.string(),
+  actividades: z.array(ActividadSchema).optional(),
+  media: z.array(MediaSchema).optional(),
+  participantes: z.array(ParticipanteSchema).optional(),
+  patrocinadores: z.array(PatrocinadorSchema).optional(),
+  intereses: z.array(InteresSchema).optional(),
+  ciudad: CiudadInfoSchema.optional(),
 })
 
 export type EventoResponse = z.infer<typeof EventoSchema>
+export type ActividadDto = z.infer<typeof ActividadSchema>
+export type MediaDto = z.infer<typeof MediaSchema>
+export type ParticipanteDto = z.infer<typeof ParticipanteSchema>
+export type PatrocinadorDto = z.infer<typeof PatrocinadorSchema>
+export type InteresDto = z.infer<typeof InteresSchema>
+export type CiudadInfoDto = z.infer<typeof CiudadInfoSchema>

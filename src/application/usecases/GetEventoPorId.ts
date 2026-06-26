@@ -13,11 +13,13 @@ export class GetEventoPorId implements IGetEventoPorId {
     try {
       idSchema.parse(id)
 
-      const evento = await this.eventoRepository.obtenerPorId(id)
+      const detalle = await this.eventoRepository.obtenerDetallePorId(id)
 
-      if (!evento) {
+      if (!detalle) {
         return success(null)
       }
+
+      const { evento, actividades, media, participantes, patrocinadores, intereses, ciudad } = detalle
 
       const response: EventoResponse = {
         id: evento.id,
@@ -34,6 +36,39 @@ export class GetEventoPorId implements IGetEventoPorId {
         observaciones: evento.observaciones || null,
         ciudadId: evento.ciudadId,
         organizadorId: evento.organizadorId,
+        actividades: actividades.map((a) => ({
+          id: a.id,
+          nombre: a.nombre,
+          descripcion: a.descripcion,
+          horaInicio: a.horaInicio.toISOString(),
+          horaFin: a.horaFin.toISOString(),
+        })),
+        media: media.map((m) => ({
+          id: m.id,
+          urlArchivo: m.urlArchivo,
+          tipo: m.tipo,
+        })),
+        participantes: participantes.map((p) => ({
+          id: p.id,
+          nombre: p.nombre,
+          rolOPerfil: p.rolOPerfil,
+        })),
+        patrocinadores: patrocinadores.map((p) => ({
+          id: p.id,
+          nombreEmpresa: p.nombreEmpresa,
+          urlLogo: p.urlLogo || null,
+          nivelPatrocinio: p.nivelPatrocinio,
+        })),
+        intereses: intereses.map((i) => ({
+          id: i.id,
+          nombre: i.nombre,
+          descripcion: i.descripcion,
+        })),
+        ciudad: {
+          id: ciudad.id,
+          nombre: ciudad.nombre,
+          codigoRegion: ciudad.codigoRegion,
+        },
       }
 
       return success(response)
