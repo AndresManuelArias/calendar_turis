@@ -1,10 +1,27 @@
-export default function Home() {
+import { container } from "@/infrastructure/config/container"
+import { ICiudadRepository } from "@/domain/ports/ICiudadRepository"
+import { HomeClient } from "@/infrastructure/driving/next/components/HomeClient"
+
+export const dynamic = "force-dynamic"
+
+export default async function Home() {
+  let ciudades: Array<{ id: string; nombre: string }> = []
+
+  try {
+    const ciudadRepo = container.resolve<ICiudadRepository>("ICiudadRepository")
+    const ciudadesData = await ciudadRepo.obtenerTodas()
+    ciudades = ciudadesData.map((c) => ({ id: c.id, nombre: c.nombre }))
+  } catch (error) {
+    console.error("Error al cargar ciudades:", error)
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">Agenda Lugar</h1>
-      <p className="mt-4 text-lg text-muted-foreground">
-        Aplicación de agenda para gestionar lugares y eventos
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="mb-2 text-3xl font-bold tracking-tight">Agenda Lugar</h1>
+      <p className="mb-8 text-muted-foreground">
+        Descubre los mejores eventos en tu ciudad
       </p>
-    </main>
-  );
+      <HomeClient ciudades={ciudades} />
+    </div>
+  )
 }
