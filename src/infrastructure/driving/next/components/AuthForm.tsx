@@ -4,9 +4,7 @@ import { useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface AuthFormProps {
   mode: "login" | "registro"
@@ -162,18 +160,18 @@ export function AuthForm({ mode, onSuccess }: AuthFormProps) {
   }
 
   return (
-    <Card className="mx-auto w-full max-w-md">
-      <CardHeader className="text-center">
-        <CardTitle className="text-xl">
+    <div className="bg-white rounded-2xl shadow-md border border-gray-100 mx-auto w-full max-w-md">
+      <div className="p-6 text-center border-b border-gray-50">
+        <h2 className="text-xl font-bold text-gray-900">
           {mode === "login" ? "Iniciar Sesión" : "Crear Cuenta"}
-        </CardTitle>
-        <CardDescription>
+        </h2>
+        <p className="text-sm text-gray-500 mt-1">
           {mode === "login"
             ? "Ingresa tus credenciales para acceder al panel"
             : "Regístrate como organizador para publicar eventos"}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+        </p>
+      </div>
+      <div className="p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           {serverError && (
             <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
@@ -286,33 +284,33 @@ export function AuthForm({ mode, onSuccess }: AuthFormProps) {
             </>
           )}
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <button type="submit" disabled={isLoading} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50">
             {isLoading
               ? "Procesando..."
               : mode === "login"
                 ? "Iniciar Sesión"
                 : "Crear Cuenta"}
-          </Button>
+          </button>
 
-          <div className="text-center text-sm text-muted-foreground">
+          <div className="text-center text-sm text-gray-500">
             {mode === "login" ? (
               <>
                 ¿No tienes cuenta?{" "}
-                <Link href="/auth/registro" className="text-primary hover:underline">
+                <Link href="/auth/registro" className="text-indigo-600 hover:underline">
                   Regístrate
                 </Link>
               </>
             ) : (
               <>
                 ¿Ya tienes cuenta?{" "}
-                <Link href="/auth/login" className="text-primary hover:underline">
+                <Link href="/auth/login" className="text-indigo-600 hover:underline">
                   Inicia Sesión
                 </Link>
               </>
             )}
           </div>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }

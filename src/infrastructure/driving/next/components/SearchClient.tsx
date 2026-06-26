@@ -146,22 +146,22 @@ export function SearchClient({ ubicaciones, intereses }: SearchClientProps) {
       />
 
       <section>
-        <h2 className="mb-6 text-2xl font-semibold">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">
           {hasFilters ? "Resultados de búsqueda" : "Eventos de Hoy"}
         </h2>
 
         {isLoading && (
           <div className="flex items-center justify-center py-16">
-            <p className="text-muted-foreground">Cargando eventos...</p>
+            <p className="text-gray-500">Cargando eventos...</p>
           </div>
         )}
 
         {!isLoading && selectedCityId && eventos.length === 0 && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-gray-500">
               No se encontraron eventos con los filtros seleccionados.
             </p>
-            <p className="mt-2 text-muted-foreground">
+            <p className="mt-2 text-gray-400">
               Intenta ajustar las fechas o intereses para ver más opciones.
             </p>
           </div>
@@ -169,7 +169,7 @@ export function SearchClient({ ubicaciones, intereses }: SearchClientProps) {
 
         {!isLoading && !selectedCityId && (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-gray-500">
               Selecciona una ciudad para explorar eventos.
             </p>
           </div>

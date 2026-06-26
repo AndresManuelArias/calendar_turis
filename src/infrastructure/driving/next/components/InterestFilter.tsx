@@ -1,7 +1,5 @@
 "use client"
 
-import { Badge } from "@/components/ui/badge"
-
 interface InteresData {
   id: string
   nombre: string
@@ -28,7 +26,7 @@ export function InterestFilter({ intereses, selectedIds, onChange }: InterestFil
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="text-sm font-medium text-muted-foreground">
+      <span className="text-sm font-medium text-gray-500">
         Intereses:
       </span>
       {intereses.map((interes) => {
@@ -37,21 +35,20 @@ export function InterestFilter({ intereses, selectedIds, onChange }: InterestFil
           <button
             key={interes.id}
             onClick={() => handleToggle(interes.id)}
-            className="cursor-pointer"
+            className={`rounded-full px-3 py-1.5 text-sm font-medium transition-all cursor-pointer ${
+              isSelected
+                ? "bg-indigo-600 hover:bg-indigo-700 text-white border border-indigo-600"
+                : "bg-white text-gray-600 border border-gray-200 hover:border-indigo-300 hover:text-indigo-600"
+            }`}
           >
-            <Badge
-              variant={isSelected ? "default" : "outline"}
-              className="select-none transition-colors hover:opacity-80"
-            >
-              {interes.nombre}
-            </Badge>
+            {interes.nombre}
           </button>
         )
       })}
       {selectedIds.length > 0 && (
         <button
           onClick={() => onChange([])}
-          className="text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground"
+          className="text-xs text-gray-400 underline underline-offset-2 hover:text-gray-600 transition-colors"
         >
           Limpiar
         </button>

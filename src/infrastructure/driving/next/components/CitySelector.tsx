@@ -15,7 +15,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
 
 const CITY_STORAGE_KEY = "agenda-lugar-ciudad"
 
@@ -95,49 +94,46 @@ export function CitySelector({ ubicaciones, selectedCityId, onSelect }: CitySele
           {!selectedPais ? (
             <div className="grid gap-2 pt-2">
               {ubicaciones.map((pais) => (
-                <Button
+                <button
                   key={pais.nombre}
-                  variant="outline"
-                  className="w-full justify-start"
+                  className="w-full justify-start border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors px-4 py-2 text-sm font-medium text-left"
                   onClick={() => setSelectedPais(pais.nombre)}
                 >
                   {pais.nombre}
-                </Button>
+                </button>
               ))}
             </div>
           ) : !selectedEstado ? (
             <div className="space-y-3 pt-2">
-              <Button variant="ghost" size="sm" onClick={() => setSelectedPais("")}>
+              <button className="text-sm text-gray-500 hover:text-gray-700 transition-colors" onClick={() => setSelectedPais("")}>
                 ← Volver a países
-              </Button>
+              </button>
               <div className="grid gap-2">
                 {estadosDisponibles.map((estado) => (
-                  <Button
+                  <button
                     key={estado.nombre}
-                    variant="outline"
-                    className="w-full justify-start"
+                    className="w-full justify-start border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors px-4 py-2 text-sm font-medium text-left"
                     onClick={() => setSelectedEstado(estado.nombre)}
                   >
                     {estado.nombre}
-                  </Button>
+                  </button>
                 ))}
               </div>
             </div>
           ) : (
             <div className="space-y-3 pt-2">
-              <Button variant="ghost" size="sm" onClick={() => { setSelectedEstado(""); setSelectedPais("") }}>
+              <button className="text-sm text-gray-500 hover:text-gray-700 transition-colors" onClick={() => { setSelectedEstado(""); setSelectedPais("") }}>
                 ← Volver a países
-              </Button>
+              </button>
               <div className="grid gap-2">
                 {ciudadesDisponibles.map((ciudad) => (
-                  <Button
+                  <button
                     key={ciudad.id}
-                    variant="outline"
-                    className="w-full justify-start"
+                    className="w-full justify-start bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors px-4 py-2 text-sm font-medium text-left"
                     onClick={() => handleSelect(ciudad.id)}
                   >
                     {ciudad.nombre}
-                  </Button>
+                  </button>
                 ))}
               </div>
             </div>
@@ -146,9 +142,9 @@ export function CitySelector({ ubicaciones, selectedCityId, onSelect }: CitySele
       </Dialog>
 
       <div className="flex flex-wrap items-center gap-2">
-        <label className="text-sm font-medium">Ubicación:</label>
+        <label className="text-sm font-medium text-gray-500">Ubicación:</label>
         <Select value={selectedCityId ?? ""} onValueChange={(v) => v && onSelect(v)}>
-          <SelectTrigger className="w-[220px]">
+          <SelectTrigger className="w-[220px] bg-white border-gray-200 rounded-xl">
             <SelectValue placeholder="Seleccionar ubicación">
               {selectedCiudad && paisDeCiudad && estadoDeCiudad
                 ? `${selectedCiudad.nombre}, ${estadoDeCiudad.nombre}, ${paisDeCiudad.nombre}`

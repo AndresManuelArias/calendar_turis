@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter, usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
 
 interface SesionData {
   usuarioId: string
@@ -37,24 +36,24 @@ export function Navbar() {
   }
 
   return (
-    <header className="border-b">
+    <header className="bg-white border-b border-gray-100">
       <div className="container mx-auto flex h-14 items-center gap-6 px-4">
         <Link
           href="/"
-          className="text-lg font-semibold tracking-tight hover:text-muted-foreground"
+          className="text-indigo-600 font-bold text-lg transition-colors"
         >
           Agenda Lugar
         </Link>
         <nav className="flex items-center gap-4 text-sm">
           <Link
             href="/"
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className={`transition-colors ${pathname === "/" ? "text-indigo-600 font-medium" : "text-gray-500 hover:text-indigo-600"}`}
           >
             Inicio
           </Link>
           <Link
             href="/eventos"
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className={`transition-colors ${pathname === "/eventos" ? "text-indigo-600 font-medium" : "text-gray-500 hover:text-indigo-600"}`}
           >
             Buscar
           </Link>
@@ -64,20 +63,23 @@ export function Navbar() {
             <>
               <Link
                 href="/organizador/eventos"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className={`text-sm transition-colors ${pathname === "/organizador/eventos" ? "text-indigo-600 font-medium" : "text-gray-500 hover:text-indigo-600"}`}
               >
                 Mis Eventos
               </Link>
-              <span className="text-sm text-muted-foreground">{sesion.nombre}</span>
-              <Button variant="outline" size="sm" onClick={handleCerrarSesion}>
+              <span className="text-sm text-indigo-600 font-medium">{sesion.nombre}</span>
+              <button
+                onClick={handleCerrarSesion}
+                className="border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors px-4 py-2 text-sm font-medium"
+              >
                 Cerrar Sesión
-              </Button>
+              </button>
             </>
           ) : (
             <Link href="/auth/login">
-              <Button variant="default" size="sm">
+              <button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors px-4 py-2 text-sm font-medium">
                 Iniciar Sesión
-              </Button>
+              </button>
             </Link>
           )}
         </div>

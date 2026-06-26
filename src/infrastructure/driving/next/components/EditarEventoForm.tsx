@@ -384,7 +384,7 @@ export function EditarEventoForm({ eventoId }: EditarEventoFormProps) {
   if (cargandoEvento) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
-        <p className="text-muted-foreground">Cargando datos del evento...</p>
+        <p className="text-gray-500">Cargando datos del evento...</p>
       </div>
     )
   }
@@ -398,7 +398,7 @@ export function EditarEventoForm({ eventoId }: EditarEventoFormProps) {
       )}
 
       {/* Sección 1 — Información Básica */}
-      <Card>
+      <Card className="border-gray-100 rounded-2xl">
         <CardHeader>
           <CardTitle>Información Básica</CardTitle>
         </CardHeader>
@@ -469,7 +469,7 @@ export function EditarEventoForm({ eventoId }: EditarEventoFormProps) {
       </Card>
 
       {/* Sección 2 — Fechas y Lugar */}
-      <Card>
+      <Card className="border-gray-100 rounded-2xl">
         <CardHeader>
           <CardTitle>Fechas y Lugar</CardTitle>
         </CardHeader>
@@ -545,7 +545,7 @@ export function EditarEventoForm({ eventoId }: EditarEventoFormProps) {
       </Card>
 
       {/* Sección 3 — Costo */}
-      <Card>
+      <Card className="border-gray-100 rounded-2xl">
         <CardHeader>
           <CardTitle>Costo</CardTitle>
         </CardHeader>
@@ -590,7 +590,7 @@ export function EditarEventoForm({ eventoId }: EditarEventoFormProps) {
       </Card>
 
       {/* Sección 4 — Actividades */}
-      <Card>
+      <Card className="border-gray-100 rounded-2xl">
         <CardHeader>
           <CardTitle>Actividades</CardTitle>
         </CardHeader>
@@ -651,7 +651,7 @@ export function EditarEventoForm({ eventoId }: EditarEventoFormProps) {
       </Card>
 
       {/* Sección 5 — Media */}
-      <Card>
+      <Card className="border-gray-100 rounded-2xl">
         <CardHeader>
           <CardTitle>Media</CardTitle>
         </CardHeader>
@@ -697,7 +697,7 @@ export function EditarEventoForm({ eventoId }: EditarEventoFormProps) {
       </Card>
 
       {/* Sección 6 — Participantes */}
-      <Card>
+      <Card className="border-gray-100 rounded-2xl">
         <CardHeader>
           <CardTitle>Participantes</CardTitle>
         </CardHeader>
@@ -740,7 +740,7 @@ export function EditarEventoForm({ eventoId }: EditarEventoFormProps) {
       </Card>
 
       {/* Sección 7 — Patrocinadores */}
-      <Card>
+      <Card className="border-gray-100 rounded-2xl">
         <CardHeader>
           <CardTitle>Patrocinadores</CardTitle>
         </CardHeader>
@@ -801,7 +801,7 @@ export function EditarEventoForm({ eventoId }: EditarEventoFormProps) {
       </Card>
 
       {/* Sección 8 — Intereses */}
-      <Card>
+      <Card className="border-gray-100 rounded-2xl">
         <CardHeader>
           <CardTitle>Intereses</CardTitle>
         </CardHeader>
@@ -830,16 +830,16 @@ export function EditarEventoForm({ eventoId }: EditarEventoFormProps) {
 
       {/* Botón de envío */}
       <div className="flex justify-end gap-4">
-        <Button
+        <button
           type="button"
-          variant="outline"
           onClick={() => router.back()}
+          className="border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors px-6 py-2.5 text-sm font-medium"
         >
           Cancelar
-        </Button>
-        <Button type="submit" disabled={enviando} size="lg">
+        </button>
+        <button type="submit" disabled={enviando} className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl px-6 py-2.5 text-sm font-medium transition-colors disabled:opacity-50">
           {enviando ? "Guardando cambios..." : "Guardar Cambios"}
-        </Button>
+        </button>
       </div>
     </form>
   )

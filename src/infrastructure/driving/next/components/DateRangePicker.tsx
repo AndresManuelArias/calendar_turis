@@ -6,7 +6,6 @@ import { es } from "date-fns/locale"
 import { Calendar as CalendarIcon, X } from "lucide-react"
 import { Calendar } from "@/components/ui/calendar"
 import type { DateRange } from "react-day-picker"
-import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -59,17 +58,16 @@ export function DateRangePicker({ startDate, endDate, onChange }: DateRangePicke
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <Button
-        variant="outline"
+      <button
         onClick={() => setOpen(true)}
         className={cn(
-          "w-full justify-start text-left font-normal sm:w-[280px]",
-          !hasSelection && "text-muted-foreground"
+          "bg-white border border-gray-200 text-gray-700 hover:border-indigo-300 rounded-xl px-4 py-2 text-sm font-medium transition-all w-full justify-start text-left sm:w-[280px] flex items-center",
+          !hasSelection && "text-gray-500"
         )}
       >
         <CalendarIcon className="mr-2 size-4" />
         {displayText}
-      </Button>
+      </button>
       <DialogContent showCloseButton={false}>
         <DialogHeader>
           <DialogTitle>Seleccionar rango de fechas</DialogTitle>
@@ -81,18 +79,19 @@ export function DateRangePicker({ startDate, endDate, onChange }: DateRangePicke
             onSelect={handleSelect}
             numberOfMonths={2}
             locale={es}
+            className="[&_.rdp-day_selected]:bg-indigo-600 [&_.rdp-day_selected]:text-white [&_.rdp-day_today]:text-indigo-600 [&_.rdp-button:hover]:border-indigo-300"
           />
         </div>
         <div className="flex justify-center gap-2">
           {hasSelection && (
-            <Button variant="ghost" size="sm" onClick={handleClear}>
-              <X className="mr-1 size-3" />
+            <button onClick={handleClear} className="text-sm text-gray-500 hover:text-gray-700 transition-colors px-3 py-1.5">
+              <X className="mr-1 size-3 inline" />
               Limpiar filtros
-            </Button>
+            </button>
           )}
-          <Button size="sm" onClick={() => setOpen(false)}>
+          <button onClick={() => setOpen(false)} className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl px-4 py-2 text-sm font-medium transition-colors">
             Aplicar
-          </Button>
+          </button>
         </div>
       </DialogContent>
     </Dialog>

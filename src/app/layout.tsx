@@ -18,11 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={cn("font-sans", geist.variable)} suppressHydrationWarning>
-      <body>
+      <body className="bg-gray-50">
         <Navbar />
         <main className="min-h-[calc(100vh-3.5rem)]">{children}</main>
-        <footer className="border-t py-6">
-          <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
+        <footer className="border-t border-gray-100 py-6">
+          <div className="container mx-auto px-4 text-center text-sm text-gray-400">
             &copy; 2026 Agenda Lugar. Todos los derechos reservados.
           </div>
         </footer>
