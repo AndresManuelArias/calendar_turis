@@ -8,7 +8,8 @@ INSERT INTO ciudades (id, nombre, codigo_region) VALUES
   ('a1b2c3d4-0000-0000-0000-000000000002', 'Medellín', 'ANT'),
   ('a1b2c3d4-0000-0000-0000-000000000003', 'Cali', 'VAC'),
   ('a1b2c3d4-0000-0000-0000-000000000004', 'Barranquilla', 'ATL'),
-  ('a1b2c3d4-0000-0000-0000-000000000005', 'Cartagena', 'BOL')
+  ('a1b2c3d4-0000-0000-0000-000000000005', 'Cartagena', 'BOL'),
+  ('a1b2c3d4-0000-0000-0000-000000000006', 'Rionegro', 'ANT')
 ON CONFLICT (id) DO NOTHING;
 
 -- ============================================================
@@ -117,6 +118,99 @@ INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinera
    'c1b2c3d4-0000-0000-0000-000000000001')
 ON CONFLICT (id) DO NOTHING;
 
+-- Evento 7: Hoy - Rionegro - Música (festival al aire libre, pago con detalle)
+INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinerario, fecha_inicio, fecha_fin, lugar_direccion, costo_entrada, es_gratuito, url_ticketera_externa, observaciones, ciudad_id, organizador_id) VALUES
+  ('d1b2c3d4-0000-0000-0000-000000000007',
+   'Rionegro Music Festival',
+   'Reunir a las mejores bandas emergentes del oriente antioqueño en un solo escenario',
+   'Jóvenes y adultos amantes de la música alternativa y rock',
+   '12:00 Apertura de puertas\n13:00 Banda local: Los del Valle\n15:00 Concurso de bandas\n17:30 Artista invitado nacional\n19:00 DJ set electrónico\n21:00 Cierre',
+   CURRENT_DATE + TIME '12:00:00',
+   CURRENT_DATE + TIME '21:00:00',
+   'Parque Principal de Rionegro, Carrera 50 # 30-10',
+   25000, false, 'https://ticketera.com/rionegro-music',
+   'Menores de edad acompañados de adulto responsable. Llevar silla de playa.',
+   'a1b2c3d4-0000-0000-0000-000000000006',
+   'c1b2c3d4-0000-0000-0000-000000000001')
+ON CONFLICT (id) DO NOTHING;
+
+-- Evento 8: Hoy - Rionegro - Gastronomía (gratuito)
+INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinerario, fecha_inicio, fecha_fin, lugar_direccion, costo_entrada, es_gratuito, url_ticketera_externa, observaciones, ciudad_id, organizador_id) VALUES
+  ('d1b2c3d4-0000-0000-0000-000000000008',
+   'Mercado Campesino Rionegro',
+   'Promover los productos agrícolas locales y la gastronomía tradicional antioqueña',
+   'Familias, turistas y amantes de la cocina tradicional',
+   '07:00 Instalación de puestos\n09:00 Apertura al público\n11:00 Taller de cocina con productos locales\n14:00 Cata de café de la región\n16:00 Muestra de artesanías\n18:00 Cierre',
+   CURRENT_DATE + TIME '07:00:00',
+   CURRENT_DATE + TIME '18:00:00',
+   'Plaza de Mercado de Rionegro, Calle 40 # 45-20',
+   0, true, NULL,
+   'Entrada libre. Productos disponibles para la venta directa.',
+   'a1b2c3d4-0000-0000-0000-000000000006',
+   'c1b2c3d4-0000-0000-0000-000000000001')
+ON CONFLICT (id) DO NOTHING;
+
+-- Evento 9: Próximo fin de semana - Rionegro - Deportes
+INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinerario, fecha_inicio, fecha_fin, lugar_direccion, costo_entrada, es_gratuito, url_ticketera_externa, observaciones, ciudad_id, organizador_id) VALUES
+  ('d1b2c3d4-0000-0000-0000-000000000009',
+   'Travesía Ecológica Oriente Antioqueño',
+   'Fomentar el ecoturismo y la actividad física al aire libre en las montañas de Rionegro',
+   'Amantes del senderismo, naturaleza y deportes al aire libre',
+   'Día 1:\n06:00 Punto de encuentro\n07:00 Inicio de caminata\n10:00 Llegada a mirador\n12:00 Almuerzo campestre\n14:00 Taller de avistamiento de aves\n18:00 Fogata y camping\n\nDía 2:\n07:00 Desayuno\n09:00 Descenso\n12:00 Cierre y transporte de regreso',
+   CURRENT_DATE + INTERVAL '2 days' + TIME '06:00:00',
+   CURRENT_DATE + INTERVAL '3 days' + TIME '12:00:00',
+   'Vereda San Nicolás, Rionegro (Salida desde el Parque Principal)',
+   65000, false, 'https://ticketera.com/travesia-rionegro',
+   'Incluye guía, alimentación y equipo de camping. No incluye transporte.',
+   'a1b2c3d4-0000-0000-0000-000000000006',
+   'c1b2c3d4-0000-0000-0000-000000000001')
+ON CONFLICT (id) DO NOTHING;
+
+-- Evento 10: En 10 días - Rionegro - Tecnología
+INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinerario, fecha_inicio, fecha_fin, lugar_direccion, costo_entrada, es_gratuito, url_ticketera_externa, observaciones, ciudad_id, organizador_id) VALUES
+  ('d1b2c3d4-0000-0000-0000-000000000010',
+   'Congreso de Innovación Tecnológica Oriente',
+   'Conectar a emprendedores e innovadores del oriente antioqueño con la industria tech',
+   'Emprendedores, desarrolladores, estudiantes y empresarios',
+   '08:00 Registro\n09:00 Charla inaugural: El futuro del trabajo\n10:30 Taller de IA para negocios\n12:00 Networking lunch\n14:00 Panel: Startups que transforman\n15:30 Demo day de proyectos locales\n17:00 Premiación y cierre',
+   CURRENT_DATE + INTERVAL '10 days' + TIME '08:00:00',
+   CURRENT_DATE + INTERVAL '10 days' + TIME '17:00:00',
+   'Centro de Convenciones de Rionegro, Vía Aeropuerto',
+   80000, false, 'https://ticketera.com/congreso-tech-oriente',
+   'Cupos limitados. Incluye certificado de asistencia.',
+   'a1b2c3d4-0000-0000-0000-000000000006',
+   'c1b2c3d4-0000-0000-0000-000000000001')
+ON CONFLICT (id) DO NOTHING;
+
+-- Actividades del Rionegro Music Festival
+INSERT INTO actividades (id, nombre, descripcion, hora_inicio, hora_fin, evento_id) VALUES
+  ('e1b2c3d4-0000-0000-0000-000000000006', 'Apertura de puertas', 'Ingreso y registro de asistentes', '12:00', '13:00', 'd1b2c3d4-0000-0000-0000-000000000007'),
+  ('e1b2c3d4-0000-0000-0000-000000000007', 'Los del Valle (banda local)', 'Presentación de la banda ganadora del concurso local', '13:00', '14:30', 'd1b2c3d4-0000-0000-0000-000000000007'),
+  ('e1b2c3d4-0000-0000-0000-000000000008', 'Concurso de bandas', 'Competencia de bandas emergentes del oriente', '15:00', '17:00', 'd1b2c3d4-0000-0000-0000-000000000007'),
+  ('e1b2c3d4-0000-0000-0000-000000000009', 'Artista invitado nacional', 'Presentación estelar del grupo invitado', '17:30', '19:00', 'd1b2c3d4-0000-0000-0000-000000000007'),
+  ('e1b2c3d4-0000-0000-0000-000000000010', 'DJ set electrónico', 'Cierre musical a cargo de DJ invitado', '19:00', '21:00', 'd1b2c3d4-0000-0000-0000-000000000007')
+ON CONFLICT (id) DO NOTHING;
+
+-- Media del Rionegro Music Festival
+INSERT INTO media (id, url_archivo, tipo, evento_id) VALUES
+  ('f1b2c3d4-0000-0000-0000-000000000005', 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800', 'IMAGEN', 'd1b2c3d4-0000-0000-0000-000000000007'),
+  ('f1b2c3d4-0000-0000-0000-000000000006', 'https://images.unsplash.com/photo-1506157786151-b8491531f063?w=800', 'IMAGEN', 'd1b2c3d4-0000-0000-0000-000000000007'),
+  ('f1b2c3d4-0000-0000-0000-000000000007', 'https://www.youtube.com/embed/jfKfPfyJRdk', 'VIDEO_EMBEDDED', 'd1b2c3d4-0000-0000-0000-000000000007')
+ON CONFLICT (id) DO NOTHING;
+
+-- Participantes del Rionegro Music Festival
+INSERT INTO participantes (id, nombre, rol_o_perfil, evento_id) VALUES
+  ('a2b2c3d4-0000-0000-0000-000000000005', 'Luis Fernando Mejía', 'Director del Festival', 'd1b2c3d4-0000-0000-0000-000000000007'),
+  ('a2b2c3d4-0000-0000-0000-000000000006', 'Carolina Giraldo', 'Artista Invitada Nacional', 'd1b2c3d4-0000-0000-0000-000000000007'),
+  ('a2b2c3d4-0000-0000-0000-000000000007', 'DJ Ríos', 'DJ Electrónico Principal', 'd1b2c3d4-0000-0000-0000-000000000007')
+ON CONFLICT (id) DO NOTHING;
+
+-- Patrocinadores del Rionegro Music Festival
+INSERT INTO patrocinadores (id, nombre_empresa, url_logo, nivel_patrocinio, evento_id) VALUES
+  ('a3b2c3d4-0000-0000-0000-000000000004', 'Aguila', 'https://logo.clearbit.com/aguila.co', 'Oro', 'd1b2c3d4-0000-0000-0000-000000000007'),
+  ('a3b2c3d4-0000-0000-0000-000000000005', 'Alcaldía de Rionegro', 'https://logo.clearbit.com/rionegro.gov.co', 'Plata', 'd1b2c3d4-0000-0000-0000-000000000007')
+ON CONFLICT (id) DO NOTHING;
+
 -- Evento 6: Hoy - Bogotá - Tecnología (para tener múltiples eventos en una ciudad)
 INSERT INTO eventos (id, titulo, objetivo, publico_objetivo, descripcion_itinerario, fecha_inicio, fecha_fin, lugar_direccion, costo_entrada, es_gratuito, url_ticketera_externa, observaciones, ciudad_id, organizador_id) VALUES
   ('d1b2c3d4-0000-0000-0000-000000000006',
@@ -143,7 +237,11 @@ INSERT INTO evento_interes (evento_id, interes_id) VALUES
   ('d1b2c3d4-0000-0000-0000-000000000004', 'b1b2c3d4-0000-0000-0000-000000000003'), -- Feria Cali → Arte
   ('d1b2c3d4-0000-0000-0000-000000000004', 'b1b2c3d4-0000-0000-0000-000000000004'), -- Feria Cali → Gastronomía
   ('d1b2c3d4-0000-0000-0000-000000000005', 'b1b2c3d4-0000-0000-0000-000000000005'), -- Maratón → Deportes
-  ('d1b2c3d4-0000-0000-0000-000000000006', 'b1b2c3d4-0000-0000-0000-000000000002')  -- Taller IA → Tecnología
+  ('d1b2c3d4-0000-0000-0000-000000000006', 'b1b2c3d4-0000-0000-0000-000000000002'), -- Taller IA → Tecnología
+  ('d1b2c3d4-0000-0000-0000-000000000007', 'b1b2c3d4-0000-0000-0000-000000000001'), -- Rionegro Music → Música
+  ('d1b2c3d4-0000-0000-0000-000000000008', 'b1b2c3d4-0000-0000-0000-000000000004'), -- Mercado Campesino → Gastronomía
+  ('d1b2c3d4-0000-0000-0000-000000000009', 'b1b2c3d4-0000-0000-0000-000000000005'), -- Travesía Ecológica → Deportes
+  ('d1b2c3d4-0000-0000-0000-000000000010', 'b1b2c3d4-0000-0000-0000-000000000002')  -- Congreso Tecnología → Tecnología
 ON CONFLICT DO NOTHING;
 
 -- ============================================================
