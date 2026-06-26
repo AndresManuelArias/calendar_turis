@@ -9,6 +9,10 @@ import { Patrocinador } from "../../../domain/entities/Patrocinador"
 import { Ciudad } from "../../../domain/entities/Ciudad"
 import { Interes } from "../../../domain/entities/Interes"
 
+function dateToTimeString(d: Date): string {
+  return `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}:${String(d.getSeconds()).padStart(2, "0")}`
+}
+
 function mapearEvento( row: Record<string, unknown> ): Evento {
   return new Evento(
     row.id as string,
@@ -317,8 +321,8 @@ export class SupabaseEventoRepository implements IEventoRepository {
       id: randomUUID(),
       nombre: a.nombre,
       descripcion: a.descripcion || null,
-      hora_inicio: a.horaInicio,
-      hora_fin: a.horaFin,
+      hora_inicio: dateToTimeString(a.horaInicio),
+      hora_fin: dateToTimeString(a.horaFin),
       evento_id: eventoId,
     }))
 
