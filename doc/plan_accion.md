@@ -49,6 +49,8 @@
 
 ### Fase 0 — Scaffolding del proyecto
 
+**Agente recomendado: `infrastructure`**
+
 - Inicializar Next.js con App Router y TypeScript
 - Configurar Tailwind CSS y shadcn/ui
 - Configurar Supabase CLI + Docker local (PostgreSQL + Auth)
@@ -58,6 +60,8 @@
 - Crear archivo `.env.local` con variables de Supabase
 
 ### Fase 1 — Capa de Dominio (`src/domain/`)
+
+**Agente recomendado: `domain`**
 
 **Entidades** (clases puras TypeScript, 0% dependencias externas):
 - `Ciudad`, `Evento`, `Actividad`, `Interes`, `Media`, `Participante`, `Patrocinador`, `Alianza`
@@ -74,6 +78,8 @@
 - Tipos de error compartidos
 
 ### Fase 2 — Capa de Aplicación (`src/application/`)
+
+**Agente recomendado: `application`**
 
 **Puertos de entrada (inbound interfaces):**
 - `IGetEventosDelDia` — `execute(ciudadId: string): Promise<EventoResponse[]>`
@@ -99,6 +105,8 @@
 
 ### Fase 3 — Capa de Infraestructura (`src/infrastructure/`)
 
+**Agente recomendado: `infrastructure`**
+
 **Adaptadores driven (repositorios Supabase):**
 - `SupabaseEventoRepository` implementa `IEventoRepository`
 - `SupabaseCiudadRepository` implementa `ICiudadRepository`
@@ -113,11 +121,15 @@
 
 ### Fase 4 — HU01: Eventos del día
 
+**Agente recomendado: `feature`** (orquesta domain + application + infrastructure + ui)
+
 - **API Route:** `GET /api/eventos/hoy` → invoca `GetEventosDelDia`
 - **UI:** Página principal con lista de eventos del día + selector de ciudad al primer ingreso
 - **Componentes:** `EventoCard`, `CitySelector`, `EventoGrid`
 
 ### Fase 5 — HU02 + HU03: Búsqueda por fechas y filtro por intereses
+
+**Agente recomendado: `feature`** (orquesta domain + application + infrastructure + ui)
 
 - **API Route:** `GET /api/eventos?fechaInicio=&fechaFin=&intereses=` → invoca `FiltrarEventos`
 - **UI:** Calendario/DatePicker + chips de intereses en una misma vista
@@ -125,11 +137,15 @@
 
 ### Fase 6 — HU04: Vista detalle del evento
 
+**Agente recomendado: `feature`** (orquesta domain + application + infrastructure + ui)
+
 - **API Route:** `GET /api/eventos/[id]` → invoca `GetEventoPorId`
 - **UI:** Página `/eventos/[id]` con info completa, actividades, media, mapa, botón de compra/entrada libre
 - **Componentes:** `EventoDetail`, `ActividadList`, `ImageGallery`, `VideoEmbed`, `ParticipanteList`, `PatrocinadorList`
 
 ### Fase 7 — HU05: Autenticación de organizador
+
+**Agente recomendado: `feature`** (orquesta domain + application + infrastructure + ui)
 
 - **API Routes:** `POST /api/auth/registro`, `POST /api/auth/login`
 - **UI:** Páginas `/registro` y `/login`
@@ -138,12 +154,16 @@
 
 ### Fase 8 — HU06: Creación de eventos
 
+**Agente recomendado: `feature`** (orquesta domain + application + infrastructure + ui)
+
 - **API Route:** `POST /api/eventos` → invoca `CrearEvento`
 - **UI:** Página `/organizador/eventos/nuevo` con formulario paso a paso
 - Validación con Zod en frontend y backend
 - **Componentes:** `EventForm` (secciones para Actividades, Media, Participantes, Patrocinadores)
 
 ### Fase 9 — Integración, pruebas y despliegue
+
+**Agente recomendado: `infrastructure`**
 
 - Probar flujo completo: registro → login → crear evento → ver en listado público
 - Página de listado de eventos del organizador (`/organizador/eventos`)
