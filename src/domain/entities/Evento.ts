@@ -13,6 +13,7 @@ export class Evento {
   private _observaciones: string;
   private _ciudadId: string;
   private _organizadorId: string;
+  private _imagenUrl: string;
 
   constructor(
     id: string,
@@ -28,7 +29,8 @@ export class Evento {
     urlTicketeraExterna: string,
     observaciones: string,
     ciudadId: string,
-    organizadorId: string
+    organizadorId: string,
+    imagenUrl: string = ""
   ) {
     this._id = id;
     this._titulo = titulo;
@@ -44,6 +46,7 @@ export class Evento {
     this._observaciones = observaciones;
     this._ciudadId = ciudadId;
     this._organizadorId = organizadorId;
+    this._imagenUrl = imagenUrl;
   }
 
   get id(): string {
@@ -100,6 +103,10 @@ export class Evento {
 
   get organizadorId(): string {
     return this._organizadorId;
+  }
+
+  get imagenUrl(): string {
+    return this._imagenUrl;
   }
 
   esHoy(): boolean {

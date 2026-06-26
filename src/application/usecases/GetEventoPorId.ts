@@ -34,6 +34,7 @@ export class GetEventoPorId implements IGetEventoPorId {
         esGratuito: evento.esGratuito,
         urlTicketeraExterna: evento.urlTicketeraExterna || null,
         observaciones: evento.observaciones || null,
+        imagenUrl: evento.imagenUrl || null,
         ciudadId: evento.ciudadId,
         organizadorId: evento.organizadorId,
         actividades: actividades.map((a) => ({

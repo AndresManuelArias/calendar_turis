@@ -63,6 +63,7 @@ export function CrearEventoForm() {
   const [publicoObjetivo, setPublicoObjetivo] = useState("")
   const [descripcionItinerario, setDescripcionItinerario] = useState("")
   const [observaciones, setObservaciones] = useState("")
+  const [imagenUrl, setImagenUrl] = useState("")
 
   const [fechaInicio, setFechaInicio] = useState("")
   const [horaInicio, setHoraInicio] = useState("")
@@ -212,6 +213,7 @@ export function CrearEventoForm() {
         esGratuito,
         urlTicketeraExterna: urlTicketeraExterna || null,
         observaciones: observaciones || null,
+        imagenUrl: imagenUrl || undefined,
         ciudadId,
         actividades: actividades.length > 0
           ? actividades.map((a) => ({
@@ -272,7 +274,7 @@ export function CrearEventoForm() {
     titulo, objetivo, publicoObjetivo, descripcionItinerario,
     fechaInicio, horaInicio, fechaFin, horaFin, lugarDireccion,
     costoEntrada, esGratuito, urlTicketeraExterna, observaciones,
-    ciudadId, actividades, mediaList, participantes, patrocinadores,
+    imagenUrl, ciudadId, actividades, mediaList, participantes, patrocinadores,
     interesesSeleccionados, router,
   ])
 
@@ -340,6 +342,16 @@ export function CrearEventoForm() {
               onChange={(e) => setObservaciones(e.target.value)}
               className="h-20 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 md:text-sm"
               placeholder="Información adicional..."
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="imagenUrl">URL de Imagen Principal</Label>
+            <Input
+              id="imagenUrl"
+              type="url"
+              value={imagenUrl}
+              onChange={(e) => setImagenUrl(e.target.value)}
+              placeholder="https://..."
             />
           </div>
         </CardContent>

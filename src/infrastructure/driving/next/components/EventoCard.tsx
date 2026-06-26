@@ -18,6 +18,7 @@ interface EventoData {
   lugarDireccion: string
   costoEntrada: number
   esGratuito: boolean
+  imagenUrl?: string | null
 }
 
 interface EventoCardProps {
@@ -37,9 +38,19 @@ export function EventoCard({ evento }: EventoCardProps) {
   return (
     <Link href={`/eventos/${evento.id}`} className="block">
       <Card className="h-full cursor-pointer transition-shadow hover:shadow-lg">
-        <div className="flex aspect-[16/9] items-center justify-center bg-muted">
-          <ImageIcon className="size-12 text-muted-foreground/40" />
-        </div>
+        {evento.imagenUrl ? (
+          <div className="aspect-[16/9] w-full overflow-hidden">
+            <img
+              src={evento.imagenUrl}
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="flex aspect-[16/9] items-center justify-center bg-muted">
+            <ImageIcon className="size-12 text-muted-foreground/40" />
+          </div>
+        )}
         <CardHeader>
           <CardTitle className="line-clamp-2">{evento.titulo}</CardTitle>
         </CardHeader>

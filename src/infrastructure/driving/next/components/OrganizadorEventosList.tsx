@@ -12,6 +12,7 @@ interface EventoItem {
   lugarDireccion: string
   esGratuito: boolean
   costoEntrada: number
+  imagenUrl: string | null
 }
 
 export function OrganizadorEventosList() {
@@ -69,9 +70,19 @@ export function OrganizadorEventosList() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {eventos.map((e) => (
-        <div key={e.id} className="rounded-xl border p-4 transition-colors hover:bg-muted/50">
+        <div key={e.id} className="overflow-hidden rounded-xl border transition-colors hover:bg-muted/50">
+          {e.imagenUrl && (
+            <div className="aspect-video w-full overflow-hidden">
+              <img
+                src={e.imagenUrl}
+                alt=""
+                className="h-full w-full object-cover"
+              />
+            </div>
+          )}
           <Link href={`/eventos/${e.id}`}>
-            <h3 className="font-semibold">{e.titulo}</h3>
+            <div className="p-4">
+              <h3 className="font-semibold">{e.titulo}</h3>
             <p className="mt-1 text-sm text-muted-foreground">{e.lugarDireccion}</p>
             <p className="text-sm text-muted-foreground">
               {new Date(e.fechaInicio).toLocaleDateString("es-CO", {
@@ -87,8 +98,9 @@ export function OrganizadorEventosList() {
                 <span>$ {e.costoEntrada.toLocaleString("es-CO")}</span>
               )}
             </p>
+            </div>
           </Link>
-          <div className="mt-3 flex justify-end">
+          <div className="flex justify-end px-4 pb-4">
             <Link href={`/organizador/eventos/${e.id}/editar`}>
               <Button type="button" variant="outline" size="sm">
                 Editar

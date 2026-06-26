@@ -42,7 +42,8 @@ export class CrearEvento implements ICrearEvento {
         validParams.urlTicketeraExterna ?? "",
         validParams.observaciones ?? "",
         validParams.ciudadId,
-        validParams.organizadorId
+        validParams.organizadorId,
+        validParams.imagenUrl ?? ""
       )
 
       await this.eventoRepository.guardar(evento)
@@ -108,6 +109,7 @@ export class CrearEvento implements ICrearEvento {
         esGratuito: evento.esGratuito,
         urlTicketeraExterna: evento.urlTicketeraExterna || null,
         observaciones: evento.observaciones || null,
+        imagenUrl: evento.imagenUrl || null,
         ciudadId: evento.ciudadId,
         organizadorId: evento.organizadorId,
       }

@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
       lugarDireccion: e.lugarDireccion,
       esGratuito: e.esGratuito,
       costoEntrada: e.costoEntrada,
+      imagenUrl: e.imagenUrl || null,
     }))
 
     return NextResponse.json({ data, error: null }, { status: 200 })

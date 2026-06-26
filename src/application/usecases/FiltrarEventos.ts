@@ -41,6 +41,7 @@ export class FiltrarEventos implements IFiltrarEventos {
         esGratuito: e.esGratuito,
         urlTicketeraExterna: e.urlTicketeraExterna || null,
         observaciones: e.observaciones || null,
+        imagenUrl: e.imagenUrl || null,
         ciudadId: e.ciudadId,
         organizadorId: e.organizadorId,
       }))

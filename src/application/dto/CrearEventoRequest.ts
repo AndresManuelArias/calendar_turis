@@ -36,6 +36,7 @@ export const CrearEventoSchema = z.object({
   esGratuito: z.boolean(),
   urlTicketeraExterna: z.string().url().nullable().optional(),
   observaciones: z.string().nullable().optional(),
+  imagenUrl: z.string().optional(),
   ciudadId: z.string().min(1, "Ciudad requerida"),
   organizadorId: z.string().min(1, "Organizador requerido"),
   actividades: z.array(ActividadInputSchema).optional(),

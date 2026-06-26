@@ -17,6 +17,15 @@ export function EventoDetail({ evento }: EventoDetailProps) {
 
   return (
     <Card>
+      {evento.imagenUrl && (
+        <div className="w-full overflow-hidden rounded-t-xl">
+          <img
+            src={evento.imagenUrl}
+            alt={evento.titulo}
+            className="w-full rounded-xl object-cover max-h-96"
+          />
+        </div>
+      )}
       <CardHeader>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="space-y-1">

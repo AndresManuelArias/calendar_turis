@@ -54,6 +54,7 @@ export const EventoSchema = z.object({
   esGratuito: z.boolean(),
   urlTicketeraExterna: z.string().nullable(),
   observaciones: z.string().nullable(),
+  imagenUrl: z.string().nullable(),
   ciudadId: z.string(),
   organizadorId: z.string(),
   actividades: z.array(ActividadSchema).optional(),

@@ -28,7 +28,8 @@ function mapearEvento( row: Record<string, unknown> ): Evento {
     (row.url_ticketera_externa as string) ?? "",
     (row.observaciones as string) ?? "",
     row.ciudad_id as string,
-    row.organizador_id as string
+    row.organizador_id as string,
+    (row.imagen_url as string) ?? ""
   )
 }
 
@@ -301,6 +302,7 @@ export class SupabaseEventoRepository implements IEventoRepository {
       es_gratuito: evento.esGratuito,
       url_ticketera_externa: evento.urlTicketeraExterna || null,
       observaciones: evento.observaciones || null,
+      imagen_url: evento.imagenUrl || null,
       ciudad_id: evento.ciudadId,
       organizador_id: evento.organizadorId,
     }
@@ -449,6 +451,7 @@ export class SupabaseEventoRepository implements IEventoRepository {
       es_gratuito: evento.esGratuito,
       url_ticketera_externa: evento.urlTicketeraExterna || null,
       observaciones: evento.observaciones || null,
+      imagen_url: evento.imagenUrl || null,
       ciudad_id: evento.ciudadId,
     }
 

@@ -34,6 +34,7 @@ interface EventoData {
   esGratuito: boolean
   urlTicketeraExterna: string | null
   observaciones: string | null
+  imagenUrl?: string | null
   ciudadId: string
   organizadorId: string
 }

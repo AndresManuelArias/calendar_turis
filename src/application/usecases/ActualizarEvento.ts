@@ -42,7 +42,8 @@ export class ActualizarEvento implements IActualizarEvento {
         validParams.urlTicketeraExterna ?? "",
         validParams.observaciones ?? "",
         validParams.ciudadId,
-        validParams.organizadorId
+        validParams.organizadorId,
+        validParams.imagenUrl ?? ""
       )
 
       await this.eventoRepository.actualizar(evento)
@@ -116,6 +117,7 @@ export class ActualizarEvento implements IActualizarEvento {
         esGratuito: evento.esGratuito,
         urlTicketeraExterna: evento.urlTicketeraExterna || null,
         observaciones: evento.observaciones || null,
+        imagenUrl: evento.imagenUrl || null,
         ciudadId: evento.ciudadId,
         organizadorId: evento.organizadorId,
       }

@@ -8,6 +8,7 @@ interface EventoData {
   lugarDireccion: string
   costoEntrada: number
   esGratuito: boolean
+  imagenUrl?: string | null
 }
 
 interface EventoGridProps {
