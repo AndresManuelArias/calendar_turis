@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className={cn("font-sans", geist.variable)}>
+    <html lang="es" className={cn("font-sans", geist.variable)} suppressHydrationWarning>
       <body>
         <Navbar />
         <main className="min-h-[calc(100vh-3.5rem)]">{children}</main>

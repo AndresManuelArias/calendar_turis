@@ -147,7 +147,7 @@ export function CitySelector({ ubicaciones, selectedCityId, onSelect }: CitySele
 
       <div className="flex flex-wrap items-center gap-2">
         <label className="text-sm font-medium">Ubicación:</label>
-        <Select value={selectedCityId || undefined} onValueChange={(v) => v && onSelect(v)}>
+        <Select value={selectedCityId ?? ""} onValueChange={(v) => v && onSelect(v)}>
           <SelectTrigger className="w-[220px]">
             <SelectValue placeholder="Seleccionar ubicación">
               {selectedCiudad && paisDeCiudad && estadoDeCiudad
