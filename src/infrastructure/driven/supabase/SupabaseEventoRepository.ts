@@ -409,6 +409,20 @@ export class SupabaseEventoRepository implements IEventoRepository {
     return (data ?? []).map(mapearCiudad)
   }
 
+  async obtenerPorOrganizadorId(organizadorId: string): Promise<Evento[]> {
+    const { data, error } = await this.supabase
+      .from("eventos")
+      .select("*")
+      .eq("organizador_id", organizadorId)
+      .order("fecha_inicio", { ascending: false })
+
+    if (error) {
+      throw new Error(`Error al obtener eventos del organizador: ${error.message}`)
+    }
+
+    return (data ?? []).map(mapearEvento)
+  }
+
   async obtenerIntereses(): Promise<Interes[]> {
     const { data, error } = await this.supabase
       .from("intereses")

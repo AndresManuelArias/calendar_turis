@@ -36,6 +36,7 @@ export interface IEventoRepository {
   guardarParticipantes(eventoId: string, participantes: Omit<Participante, 'id'>[]): Promise<void>;
   guardarPatrocinadores(eventoId: string, patrocinadores: Omit<Patrocinador, 'id'>[]): Promise<void>;
   guardarIntereses(eventoId: string, interesesIds: string[]): Promise<void>;
+  obtenerPorOrganizadorId(organizadorId: string): Promise<Evento[]>;
   obtenerCiudades(): Promise<Ciudad[]>;
   obtenerIntereses(): Promise<Interes[]>;
 }

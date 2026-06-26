@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { AuthGuard } from "@/infrastructure/driving/next/components/AuthGuard"
 import { Button } from "@/components/ui/button"
+import { OrganizadorEventosList } from "@/infrastructure/driving/next/components/OrganizadorEventosList"
 
 export default function OrganizadorEventosPage() {
   return (
@@ -12,14 +13,7 @@ export default function OrganizadorEventosPage() {
             <Button>Crear Evento</Button>
           </Link>
         </div>
-        <div className="rounded-xl border border-dashed p-12 text-center">
-          <p className="text-lg text-muted-foreground">
-            Bienvenido al panel del organizador. Aquí podrás gestionar tus eventos.
-          </p>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Próximamente podrás crear, editar y eliminar tus eventos desde aquí.
-          </p>
-        </div>
+        <OrganizadorEventosList />
       </div>
     </AuthGuard>
   )
