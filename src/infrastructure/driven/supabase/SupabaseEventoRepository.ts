@@ -1,11 +1,9 @@
 import { SupabaseClient } from "@supabase/supabase-js"
-import { IEventoRepository } from "../../../domain/ports/IEventoRepository"
+import { IEventoRepository, FiltrosEvento } from "../../../domain/ports/IEventoRepository"
 import { Evento } from "../../../domain/entities/Evento"
 import { Ciudad } from "../../../domain/entities/Ciudad"
+import { Interes } from "../../../domain/entities/Interes"
 
-/**
- * Mapea una fila de la tabla `eventos` (snake_case) a una entidad de dominio Evento (camelCase).
- */
 function mapearEvento( row: Record<string, unknown> ): Evento {
   return new Evento(
     row.id as string,
@@ -25,9 +23,6 @@ function mapearEvento( row: Record<string, unknown> ): Evento {
   )
 }
 
-/**
- * Mapea una fila de la tabla `ciudades` a una entidad de dominio Ciudad.
- */
 function mapearCiudad(row: Record<string, unknown>): Ciudad {
   return new Ciudad(
     row.id as string,
@@ -36,13 +31,17 @@ function mapearCiudad(row: Record<string, unknown>): Ciudad {
   )
 }
 
+function mapearInteres(row: Record<string, unknown>): Interes {
+  return new Interes(
+    row.id as string,
+    row.nombre as string,
+    row.descripcion as string
+  )
+}
+
 export class SupabaseEventoRepository implements IEventoRepository {
   constructor(private readonly supabase: SupabaseClient) {}
 
-  /**
-   * Obtiene los eventos cuyo fecha_inicio coincide con la fecha actual
-   * y pertenecen a la ciudad especificada.
-   */
   async obtenerEventosDelDia(ciudadId: string): Promise<Evento[]> {
     const { data, error } = await this.supabase
       .from("eventos")
@@ -59,9 +58,6 @@ export class SupabaseEventoRepository implements IEventoRepository {
     return (data ?? []).map(mapearEvento)
   }
 
-  /**
-   * Obtiene eventos en un rango de fechas para una ciudad.
-   */
   async obtenerPorRangoFechas(
     ciudadId: string,
     inicio: Date,
@@ -84,10 +80,6 @@ export class SupabaseEventoRepository implements IEventoRepository {
     return (data ?? []).map(mapearEvento)
   }
 
-  /**
-   * Obtiene eventos filtrados por ciudad y lista de intereses.
-   * Realiza JOIN con la tabla pivote evento_interes.
-   */
   async obtenerPorIntereses(
     ciudadId: string,
     interesesIds: string[]
@@ -109,10 +101,11 @@ export class SupabaseEventoRepository implements IEventoRepository {
       )
     }
 
-    // Eliminar duplicados (un evento puede tener varios intereses)
+    const dataAny = data as unknown as Record<string, unknown>[]
+    const rows = dataAny ?? []
     const vistos = new Set<string>()
     const eventos: Evento[] = []
-    for (const row of data ?? []) {
+    for (const row of rows) {
       if (!vistos.has(row.id as string)) {
         vistos.add(row.id as string)
         eventos.push(mapearEvento(row))
@@ -122,9 +115,53 @@ export class SupabaseEventoRepository implements IEventoRepository {
     return eventos
   }
 
-  /**
-   * Obtiene un evento por su ID.
-   */
+  async obtenerPorFiltros(filtros: FiltrosEvento): Promise<Evento[]> {
+    const tieneRango = filtros.fechaInicio !== undefined && filtros.fechaFin !== undefined
+    const tieneIntereses = filtros.interesesIds !== undefined && filtros.interesesIds.length > 0
+
+    let query = this.supabase
+      .from("eventos")
+      .select(tieneIntereses ? "*, evento_interes!inner(*)" : "*")
+      .eq("ciudad_id", filtros.ciudadId)
+
+    if (tieneRango) {
+      query = query
+        .gte("fecha_inicio", filtros.fechaInicio!.toISOString())
+        .lte("fecha_fin", filtros.fechaFin!.toISOString())
+    }
+
+    if (tieneIntereses) {
+      query = query.in("evento_interes.interes_id", filtros.interesesIds!)
+    }
+
+    query = query.order("fecha_inicio", { ascending: true })
+
+    const { data, error } = await query
+
+    if (error) {
+      throw new Error(
+        `Error al obtener eventos por filtros: ${error.message}`
+      )
+    }
+
+    const dataAny = data as unknown as Record<string, unknown>[]
+    const rows = dataAny ?? []
+
+    if (tieneIntereses) {
+      const vistos = new Set<string>()
+      const eventos: Evento[] = []
+      for (const row of rows) {
+        if (!vistos.has(row.id as string)) {
+          vistos.add(row.id as string)
+          eventos.push(mapearEvento(row))
+        }
+      }
+      return eventos
+    }
+
+    return rows.map(mapearEvento)
+  }
+
   async obtenerPorId(id: string): Promise<Evento | null> {
     const { data, error } = await this.supabase
       .from("eventos")
@@ -134,7 +171,6 @@ export class SupabaseEventoRepository implements IEventoRepository {
 
     if (error) {
       if (error.code === "PGRST116") {
-        // Código para "no se encontraron filas"
         return null
       }
       throw new Error(`Error al obtener evento por ID: ${error.message}`)
@@ -143,9 +179,6 @@ export class SupabaseEventoRepository implements IEventoRepository {
     return data ? mapearEvento(data) : null
   }
 
-  /**
-   * Guarda un evento (INSERT o UPDATE).
-   */
   async guardar(evento: Evento): Promise<void> {
     const payload = {
       id: evento.id,
@@ -173,9 +206,6 @@ export class SupabaseEventoRepository implements IEventoRepository {
     }
   }
 
-  /**
-   * Obtiene todas las ciudades.
-   */
   async obtenerCiudades(): Promise<Ciudad[]> {
     const { data, error } = await this.supabase
       .from("ciudades")
@@ -189,9 +219,19 @@ export class SupabaseEventoRepository implements IEventoRepository {
     return (data ?? []).map(mapearCiudad)
   }
 
-  // ─── Ayudantes privados ──────────────────────────────────
+  async obtenerIntereses(): Promise<Interes[]> {
+    const { data, error } = await this.supabase
+      .from("intereses")
+      .select("*")
+      .order("nombre", { ascending: true })
 
-  /** Devuelve un Date al inicio del día actual (00:00:00 UTC). */
+    if (error) {
+      throw new Error(`Error al obtener intereses: ${error.message}`)
+    }
+
+    return (data ?? []).map(mapearInteres)
+  }
+
   private _inicioDelDia(): string {
     const ahora = new Date()
     const inicio = new Date(
@@ -200,7 +240,6 @@ export class SupabaseEventoRepository implements IEventoRepository {
     return inicio.toISOString()
   }
 
-  /** Devuelve un Date al inicio del día siguiente (00:00:00 UTC). */
   private _inicioDelDiaSiguiente(): string {
     const ahora = new Date()
     const inicio = new Date(

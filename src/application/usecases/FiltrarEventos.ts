@@ -12,19 +12,18 @@ export class FiltrarEventos implements IFiltrarEventos {
     try {
       const validParams = FiltrarEventosSchema.parse(params)
 
+      const tieneFechas = validParams.fechaInicio !== undefined && validParams.fechaFin !== undefined
+      const tieneIntereses = validParams.interesesIds !== undefined && validParams.interesesIds.length > 0
+
       let eventos
 
-      if (validParams.interesesIds && validParams.interesesIds.length > 0) {
-        eventos = await this.eventoRepository.obtenerPorIntereses(
-          validParams.ciudadId,
-          validParams.interesesIds
-        )
-      } else if (validParams.fechaInicio && validParams.fechaFin) {
-        eventos = await this.eventoRepository.obtenerPorRangoFechas(
-          validParams.ciudadId,
-          validParams.fechaInicio,
-          validParams.fechaFin
-        )
+      if (tieneFechas || tieneIntereses) {
+        eventos = await this.eventoRepository.obtenerPorFiltros({
+          ciudadId: validParams.ciudadId,
+          fechaInicio: validParams.fechaInicio,
+          fechaFin: validParams.fechaFin,
+          interesesIds: validParams.interesesIds,
+        })
       } else {
         eventos = await this.eventoRepository.obtenerEventosDelDia(validParams.ciudadId)
       }
