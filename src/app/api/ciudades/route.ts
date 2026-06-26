@@ -7,7 +7,7 @@ export async function GET() {
     const repo = container.resolve<ICiudadRepository>("ICiudadRepository")
     const ciudades = await repo.obtenerTodas()
 
-    const data = ciudades.map((c) => ({ id: c.id, nombre: c.nombre }))
+    const data = ciudades.map((c) => ({ id: c.id, nombre: c.nombre, pais: c.pais }))
 
     return NextResponse.json({ data, error: null })
   } catch (error) {

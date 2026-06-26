@@ -37,6 +37,7 @@ export const CiudadInfoSchema = z.object({
   id: z.string(),
   nombre: z.string(),
   codigoRegion: z.string(),
+  pais: z.string(),
 })
 
 export const EventoSchema = z.object({

@@ -9,7 +9,8 @@ function mapearCiudad(row: Record<string, unknown>): Ciudad {
   return new Ciudad(
     row.id as string,
     row.nombre as string,
-    row.codigo_region as string
+    row.codigo_region as string,
+    (row.pais as string) ?? "Colombia"
   )
 }
 
@@ -60,6 +61,7 @@ export class SupabaseCiudadRepository implements ICiudadRepository {
       id: ciudad.id,
       nombre: ciudad.nombre,
       codigo_region: ciudad.codigoRegion,
+      pais: ciudad.pais,
     }
 
     const { error } = await this.supabase.from("ciudades").insert(payload)
