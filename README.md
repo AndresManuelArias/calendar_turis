@@ -27,6 +27,18 @@ pnpm exec supabase start
 # Detener Supabase local
 pnpm exec supabase stop
 
+# Aplicar migraciones pendientes
+pnpm exec supabase migration up
+
+# Aplicar migración manual via Docker (si supabase migration up falla)
+docker exec -i supabase_db_agenda_lugar psql "postgresql://postgres:postgres@localhost:5432/postgres" -f - < supabase/migrations/00002_alter_patrocinadores.sql
+
+# Resetear base de datos completa (aplica migraciones + seed)
+pnpm exec supabase db reset
+
+# Conectarse a la BD local via Docker
+docker exec -it supabase_db_agenda_lugar psql "postgresql://postgres:postgres@localhost:5432/postgres"
+
 # Generar scaffolding con Plop
 pnpm generate entity nombre
 pnpm generate usecase nombre

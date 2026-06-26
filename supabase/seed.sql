@@ -207,9 +207,9 @@ INSERT INTO participantes (id, nombre, rol_o_perfil, evento_id) VALUES
 ON CONFLICT (id) DO NOTHING;
 
 -- Patrocinadores del Rionegro Music Festival
-INSERT INTO patrocinadores (id, nombre_empresa, url_logo, nivel_patrocinio, evento_id) VALUES
-  ('a3b2c3d4-0000-0000-0000-000000000004', 'Aguila', 'https://logo.clearbit.com/aguila.co', 'Oro', 'd1b2c3d4-0000-0000-0000-000000000007'),
-  ('a3b2c3d4-0000-0000-0000-000000000005', 'Alcaldía de Rionegro', 'https://logo.clearbit.com/rionegro.gov.co', 'Plata', 'd1b2c3d4-0000-0000-0000-000000000007')
+INSERT INTO patrocinadores (id, nombre, logo_url, descripcion, sitio_web, evento_id) VALUES
+  ('a3b2c3d4-0000-0000-0000-000000000004', 'Aguila', 'https://logo.clearbit.com/aguila.co', 'Cerveza oficial', 'https://aguila.co', 'd1b2c3d4-0000-0000-0000-000000000007'),
+  ('a3b2c3d4-0000-0000-0000-000000000005', 'Alcaldía de Rionegro', 'https://logo.clearbit.com/rionegro.gov.co', 'Apoyo institucional', 'https://rionegro.gov.co', 'd1b2c3d4-0000-0000-0000-000000000007')
 ON CONFLICT (id) DO NOTHING;
 
 -- Evento 11: Hoy - Salta - Música (gratuito, folclore, con detalle completo)
@@ -302,10 +302,10 @@ INSERT INTO participantes (id, nombre, rol_o_perfil, evento_id) VALUES
 ON CONFLICT (id) DO NOTHING;
 
 -- Patrocinadores del Festival de Folclore Salta
-INSERT INTO patrocinadores (id, nombre_empresa, url_logo, nivel_patrocinio, evento_id) VALUES
-  ('a3b2c3d4-0000-0000-0000-000000000006', 'Gobierno de Salta', 'https://logo.clearbit.com/salta.gob.ar', 'Oro', 'd1b2c3d4-0000-0000-0000-000000000011'),
-  ('a3b2c3d4-0000-0000-0000-000000000007', 'Cerveza Salta', 'https://logo.clearbit.com/cervezasalta.com.ar', 'Plata', 'd1b2c3d4-0000-0000-0000-000000000011'),
-  ('a3b2c3d4-0000-0000-0000-000000000008', 'Hotel Sheraton Salta', 'https://logo.clearbit.com/sheraton.com.ar', 'Bronce', 'd1b2c3d4-0000-0000-0000-000000000011')
+INSERT INTO patrocinadores (id, nombre, logo_url, descripcion, sitio_web, evento_id) VALUES
+  ('a3b2c3d4-0000-0000-0000-000000000006', 'Gobierno de Salta', 'https://logo.clearbit.com/salta.gob.ar', 'Apoyo gubernamental', 'https://salta.gob.ar', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('a3b2c3d4-0000-0000-0000-000000000007', 'Cerveza Salta', 'https://logo.clearbit.com/cervezasalta.com.ar', 'Cerveza oficial', 'https://cervezasalta.com.ar', 'd1b2c3d4-0000-0000-0000-000000000011'),
+  ('a3b2c3d4-0000-0000-0000-000000000008', 'Hotel Sheraton Salta', 'https://logo.clearbit.com/sheraton.com.ar', 'Hospedaje oficial', 'https://sheraton.com.ar', 'd1b2c3d4-0000-0000-0000-000000000011')
 ON CONFLICT (id) DO NOTHING;
 
 -- Evento 6: Hoy - Bogotá - Tecnología (para tener múltiples eventos en una ciudad)
@@ -379,10 +379,10 @@ ON CONFLICT (id) DO NOTHING;
 -- ============================================================
 -- Patrocinadores del Festival de Jazz
 -- ============================================================
-INSERT INTO patrocinadores (id, nombre_empresa, url_logo, nivel_patrocinio, evento_id) VALUES
-  ('a3b2c3d4-0000-0000-0000-000000000001', 'Bavaria', 'https://logo.clearbit.com/bavaria.co', 'Oro', 'd1b2c3d4-0000-0000-0000-000000000001'),
-  ('a3b2c3d4-0000-0000-0000-000000000002', 'Claro Colombia', 'https://logo.clearbit.com/claro.com.co', 'Plata', 'd1b2c3d4-0000-0000-0000-000000000001'),
-  ('a3b2c3d4-0000-0000-0000-000000000003', 'IDARTES', 'https://logo.clearbit.com/idartes.gov.co', 'Bronce', 'd1b2c3d4-0000-0000-0000-000000000001')
+INSERT INTO patrocinadores (id, nombre, logo_url, descripcion, sitio_web, evento_id) VALUES
+  ('a3b2c3d4-0000-0000-0000-000000000001', 'Bavaria', 'https://logo.clearbit.com/bavaria.co', 'Cerveza oficial', 'https://bavaria.co', 'd1b2c3d4-0000-0000-0000-000000000001'),
+  ('a3b2c3d4-0000-0000-0000-000000000002', 'Claro Colombia', 'https://logo.clearbit.com/claro.com.co', 'Telecomunicaciones', 'https://claro.com.co', 'd1b2c3d4-0000-0000-0000-000000000001'),
+  ('a3b2c3d4-0000-0000-0000-000000000003', 'IDARTES', 'https://logo.clearbit.com/idartes.gov.co', 'Instituto Distrital de las Artes', 'https://idartes.gov.co', 'd1b2c3d4-0000-0000-0000-000000000001')
 ON CONFLICT (id) DO NOTHING;
 
 -- ============================================================
