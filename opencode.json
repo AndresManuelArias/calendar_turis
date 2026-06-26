@@ -21,6 +21,10 @@
     "feature": {
       "description": "Orquestador: implementa Historias de Usuario completas (HU01-HU06) en todas las capas",
       "mode": "subagent"
+    },
+    "styling": {
+      "description": "Aplica la guía de estilos visuales del proyecto: mobile-first, paleta indigo, tarjetas rounded-2xl, calendario híbrido, micro-interacciones",
+      "mode": "subagent"
     }
   },
   "references": {
