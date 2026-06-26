@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import "./globals.css"
 import { Geist } from "next/font/google"
 import { cn } from "@/lib/utils"
+import { Navbar } from "@/infrastructure/driving/next/components/Navbar"
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -19,30 +19,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={cn("font-sans", geist.variable)}>
       <body>
-        <header className="border-b">
-          <div className="container mx-auto flex h-14 items-center gap-6 px-4">
-            <Link
-              href="/"
-              className="text-lg font-semibold tracking-tight hover:text-muted-foreground"
-            >
-              Agenda Lugar
-            </Link>
-            <nav className="flex items-center gap-4 text-sm">
-              <Link
-                href="/"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Inicio
-              </Link>
-              <Link
-                href="/eventos"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Buscar
-              </Link>
-            </nav>
-          </div>
-        </header>
+        <Navbar />
         <main className="min-h-[calc(100vh-3.5rem)]">{children}</main>
         <footer className="border-t py-6">
           <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
