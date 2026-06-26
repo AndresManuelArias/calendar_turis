@@ -334,17 +334,15 @@ export class SupabaseEventoRepository implements IEventoRepository {
 
   private _inicioDelDia(): string {
     const ahora = new Date()
-    const inicio = new Date(
-      Date.UTC(ahora.getFullYear(), ahora.getMonth(), ahora.getDate(), 0, 0, 0, 0)
-    )
-    return inicio.toISOString()
+    return new Date(
+      Date.UTC(ahora.getUTCFullYear(), ahora.getUTCMonth(), ahora.getUTCDate(), 0, 0, 0, 0)
+    ).toISOString()
   }
 
   private _inicioDelDiaSiguiente(): string {
     const ahora = new Date()
-    const inicio = new Date(
-      Date.UTC(ahora.getFullYear(), ahora.getMonth(), ahora.getDate() + 1, 0, 0, 0, 0)
-    )
-    return inicio.toISOString()
+    return new Date(
+      Date.UTC(ahora.getUTCFullYear(), ahora.getUTCMonth(), ahora.getUTCDate() + 1, 0, 0, 0, 0)
+    ).toISOString()
   }
 }
