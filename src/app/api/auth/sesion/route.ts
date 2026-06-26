@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
     const token = authHeader.slice(7)
 
-    const tokenParts = token.split("-")
+    const tokenParts = token.split("_")
     if (tokenParts.length < 3 || tokenParts[0] !== "token") {
       return NextResponse.json(
         { data: { autenticado: false }, error: null },
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
           autenticado: true,
           usuario: {
             id: usuarioId,
-            nombre: tokenParts.length > 3 ? tokenParts.slice(3).join("-") : "",
+            nombre: "",
             email: "",
           },
         },

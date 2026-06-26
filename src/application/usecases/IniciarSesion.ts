@@ -26,7 +26,7 @@ export class IniciarSesion implements IIniciarSesion {
         usuarioId: usuario.id,
         nombre: usuario.nombre,
         email: usuario.email,
-        token: `token-${usuario.id}-${Date.now()}`,
+        token: `token_${usuario.id}_${Date.now()}`,
       }
 
       return success(response)

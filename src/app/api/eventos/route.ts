@@ -8,7 +8,7 @@ function extraerSesion(request: NextRequest): { usuarioId: string } | null {
   if (!authHeader || !authHeader.startsWith("Bearer ")) return null
 
   const token = authHeader.slice(7)
-  const tokenParts = token.split("-")
+  const tokenParts = token.split("_")
   if (tokenParts.length < 3 || tokenParts[0] !== "token") return null
 
   const usuarioId = tokenParts[1]
